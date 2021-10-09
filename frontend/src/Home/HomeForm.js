@@ -81,7 +81,6 @@ const HomeForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("formvalue here: ", formValues);
-        return;
         async function postData(url = '', data = {}) {
             // Default options are marked with *
             const response = await fetch(url, {
