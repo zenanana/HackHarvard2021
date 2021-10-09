@@ -128,6 +128,13 @@ def _getTimelineForSI(siid):
 def _getEvent():
 	return query_db_event('SELECT * FROM event')
 
+def _getEventForUser(userid):
+	app.logger.info(userid)
+	app.logger.info('SELECT * FROM event WHERE userID={}'.format(userid))
+	x = query_db_event('SELECT * FROM event WHERE userID={}'.format(userid))
+	app.logger.info(x)
+	return x
+
 ### MAIN PAGE ENDPOINTS
 
 ### GET A LIST ALL SOCIAL ISSUES
@@ -181,6 +188,15 @@ def create_si():
 @app.route("/list_event", methods=['GET'])
 def get_event():
     return str(_getEvent())
+
+@app.route("/get_event_for_user", methods=['GET'])
+def get_event_for_user():
+	app.logger.info("CALLED - get_event_for_user")
+	userid = request.args.get('userid')
+	x = _getEventForUser(int(userid))
+	app.logger.info("x {}".format(x))
+	res = x
+	return json.dumps(res)
 
 ### GET TIMELINE FOR SOCIAL ISSUE BY ID
 @app.route("/get_timeline_for_si", methods=['GET'])
