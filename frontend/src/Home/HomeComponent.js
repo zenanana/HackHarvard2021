@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -34,8 +34,20 @@ const homeData = {
 }
 
 export default function HomeComponent() {
+
+	const [issueData, setData] = useState([]);
+    useEffect(async () => {
+        const result = await fetch("http://localhost:5000/list_si").then(res => {
+            return res.json()
+        }).then(res => {
+            console.log(res);
+            setData(res[0])
+        });
+    }, [])
+
 	return (
 		<div>
+			<h1>Just Checking {issueData}</h1>
     		<Grid container spacing={2}>
 				<Grid item xs={12}>
 					<h2 style={{textAlign: "center"}}>Currently Trending Issues</h2>
