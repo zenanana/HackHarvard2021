@@ -8,13 +8,15 @@ import Radio from "@material-ui/core/Radio";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Slider from "@material-ui/core/Slider";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add"
+import 'semantic-ui-css/semantic.min.css'
+import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 const defaultValues = {
     title: "",
@@ -27,7 +29,7 @@ const defaultValues = {
 };
 
 
-const Form = (props) => {
+const IssueForm = (props) => {
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
@@ -76,7 +78,7 @@ const Form = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(formValues);
+        console.log("submit pressed and yielded ", formValues);
         
         async function postData(url = '', data = {}) {
             // Default options are marked with *
@@ -110,79 +112,36 @@ const Form = (props) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Grid container alignItems="center" justify="center" direction="column">
-                <Grid item>
-                    <TextField
-                    id="title-input"
-                    name="title"
-                    label="Title"
-                    type="text"
-                    value={formValues.title}
-                    onChange={handleInputChange}
-                    />
-                </Grid>
-                <br></br>
+        <div style={{marginLeft:"auto", marginRight:"auto", width: "80%"}}>
 
-                <Grid item>
-                    <TextField
-                    id="description-input"
-                    name="description"
-                    label="Description"
-                    type="text"
-                    value={formValues.description}
-                    onChange={handleInputChange}
-                    />
-                </Grid>
+        <Form>
+        <Form.Field>
+          <label>Event Title</label>
+          <input placeholder='Title' name="title" onChange={handleInputChange} />
+        </Form.Field>
+        <Form.Field>
+          <label>Description</label>
+          <input placeholder='description' name="description" onChange={handleInputChange} />
+        </Form.Field>
+        <Form.Field>
+          <label>Social Issue</label>
+          <input placeholder={issueName} name="si" disabled />
+        </Form.Field>
+        <Form.Field>
+          <label>Scale</label>
+          <input placeholder="scale" name="scale" onChange={handleInputChange}/>
+        </Form.Field>
+        <Form.Field>
+        {dataUri === '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
+        <br></br>
+        <input type="file" onChange={(event) => onChange(event.target.files[0] || null)} />
+        </Form.Field>
+        <Button type='submit' onClick={handleSubmit}>Submit</Button>
+      </Form>
+      </div>
 
-                <br></br>
-                <Grid item>
-                    <TextField
-                    id="si-input"
-                    name="si"
-                    label="Social Issue"
-                    type="text"
-                    //pass down the props
-                    defaultValue={issueName}
-                    disabled
-                    value={issueName}
-                    onChange={handleInputChange}
-                    />
-                </Grid>
-
-                <br></br>
-                <Grid item>
-                <Select
-                    id="si-select"
-                    value={formValues.scale}
-                    label="scale"
-                    name="scale"
-                    onChange={handleInputChange}
-                >
-                    <MenuItem value={"big"}>Big</MenuItem>
-                    <MenuItem value={"small"}>Small</MenuItem>
-                    <MenuItem value={"comment"}>Comment</MenuItem>
-                </Select>
-                
-            </Grid>
-          <br></br>
-
-                <Grid item>
-                    {dataUri === '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
-                    <br></br>
-                    <input type="file" onChange={(event) => onChange(event.target.files[0] || null)} />
-                </Grid>
-
-
-                <br></br>
-
-                <IconButton aria-label="add" type="submit" size="large">
-                    <AddIcon />
-                </IconButton>
-            </Grid>
-        </form>
     );
 };
 
-export default Form;
+export default IssueForm;
 
