@@ -22,8 +22,8 @@ export default function IssueComponent(props) {
             <Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={5} md={5}>
-                        <img src={issues[id-1].image} alt={issues[id-1].name} style={{width: '100%'}}></img>
-                        <h1 style={{textAlign: "center"}}>{issues[id-1].name}</h1>
+                        <img src={issues[id-1].image} alt={issues[id-1].title} style={{width: '100%', borderRadius: '15px'}}></img>
+                        <h1 style={{textAlign: "center"}}>{issues[id-1].title}</h1>
                         <p style={{textAlign: "center"}}>{issues[id-1].description}</p>
                         <br></br>
                         <h1 style={{textAlign: 'center'}}>What's Going On</h1>

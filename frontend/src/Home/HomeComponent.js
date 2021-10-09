@@ -18,15 +18,16 @@ export default function HomeComponent(props) {
             setData(res)
         });
     }, [])
+	console.log("issueData ", issueData);
+	console.log("homeData ", homeData)
 	return (
 		<div>
-			<h1>Just Checking {issueData}</h1>
     		<Grid container spacing={3}>
 				<Grid item xs={12}>
 					<h2 style={{textAlign: "center"}}>Currently Trending Issues</h2>
 				</Grid>
 				{
-					homeData.issues.map((issue, index) => {
+					issueData.map((issue, index) => {
 						return (
 							
 							<Grid item xs={6} sm={4} md={4} key={index}>
@@ -35,26 +36,27 @@ export default function HomeComponent(props) {
 									animate={{ opacity: 1 }}
 									exit={{ opacity: 0 }}
 									whileHover={{ scale: 1.03 }}>
-									<Link to={`/issue/${issue.id}`}>									
-										<Card sx={{ maxWidth: 345 }}>
-											<CardActionArea>
-												<CardMedia
-												component="img"
-												height="140"
-												image={issue.image}
-												alt={issue.name}
-												/>
-												<CardContent>
-													<Typography gutterBottom variant="h5" component="div">
-														{issue.name}
-													</Typography>
-													<Typography variant="body2" color="text.secondary">
-														{issue.description}
-													</Typography>
-												</CardContent>
-											</CardActionArea>
+										<Card sx={{ maxWidth: 345, maxHeight: 345 }}>
+											<Link to={`/issue/${issue[0]}`}>					
+												<CardActionArea>
+													<CardMedia
+													component="img"
+													height="140"
+													width="140"
+													image={issue[4]}
+													alt={issue[2]}
+													/>
+													<CardContent>
+														<Typography gutterBottom variant="h5" component="div">
+															{issue[2]}
+														</Typography>
+														<Typography variant="body2" color="text.secondary">
+															{issue[3]}
+														</Typography>
+													</CardContent>
+												</CardActionArea>
+											</Link>
 										</Card>
-									</Link>
 								</motion.div>
 								{/* <motion.div
 									initial={{ opacity: 0 }}

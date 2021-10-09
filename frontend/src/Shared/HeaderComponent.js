@@ -2,36 +2,13 @@ import React from "react";
 
 import { Autocomplete, TextField, Grid } from "@mui/material";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-const issues = [
-	{
-		id: 1,
-		name: "Climate Change"
-	},
-	{
-		id: 2,
-		name: "Human Rights"
-	},
-	{
-		id: 3,
-		name: "Hunger"
-	},
-	{
-		id: 4,
-		name: "Droughts"
-	},
-	{
-		id: 5,
-		name: "Famine"
-	},
-	{
-		id: 6,
-		name: "War"
-	}
-]
+export default function HeaderComponent(props) {
+	const { issues } = props
+	const history = useHistory()
+	// TODO: Mutate issues array into dictionary when using real database
 
-export default function HeaderComponent() {
     return (
         <Grid container spacing={2} style={{marginTop: '7px'}}>
 			<Grid item xs={4}>
@@ -48,7 +25,14 @@ export default function HeaderComponent() {
 						disableClearable
 						size="small"
 						id="searchbox"
-						options={issues.map((issue) => issue.name)}
+						options={issues.map((issue) => issue.title)}
+						onChange={(event, value) => {
+							for (let i = 0; i < issues.length; i++) {
+								if (issues[i].title === value) {
+									history.push(`/issue/${issues[i].id}`)
+								}
+							}
+						}}
 						renderInput={(params) => (
 						<TextField
 							{...params}

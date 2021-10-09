@@ -79,11 +79,12 @@ def _getNextUserID():
 def _getSI():
 	return query_db('SELECT * FROM si')
 
+### Gets the next SIID
 def _getNextSIID():
-	#x = query_db('SELECT MAX(socialID) FROM si')
-	x = query_db('SELECT * FROM si')
-	if (len(x) == 0):
-		return 0
+	x = query_db('SELECT MAX(socialID) FROM si')
+	app.logger.info(x)
+	if (len(x) == 0 or x[0] is None or x[0][0] is None):
+		return 1
 	return x[0][0] + 1
 
 def _getNextEventID():
