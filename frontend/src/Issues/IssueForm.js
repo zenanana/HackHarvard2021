@@ -35,9 +35,10 @@ const IssueForm = (props) => {
     const [dataUri, setDataUri] = useState('')
 
     const {issueName, issueID, handleClose} = props;
+  
     console.log("HEREHERE ", issueName);
 
-    defaultValues["si"] = issueID;
+    defaultValues["si"] = parseInt(issueID);
 
 
     const fileToDataUri = (file) => new Promise((resolve, reject) => {

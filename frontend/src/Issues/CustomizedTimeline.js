@@ -12,6 +12,7 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import Typography from '@mui/material/Typography';
 import { Avatar } from '@mui/material';
+import StyledEventComponent from "../Shared/StyledEventComponent";
 
 export default function CustomizedTimeline(props) {
 
@@ -24,12 +25,20 @@ export default function CustomizedTimeline(props) {
             return res.json()
         }).then(res => {
             console.log(res);
+            res.sort(function compareFn(firstEl, secondEl){
+              if (firstEl[1] < secondEl[1]) return 1;
+              return -1;
+            });
+
             setTimelineData(res)
             console.log("TIME LINE DATA ", res);
             setTimelineLoading(false)
         });
   }, [])
 
+  console.log(
+    "timeline data ", timelineData
+  )
   console.log("mapper ", timelineData.map(x => x[0]));
 
   return (
@@ -48,7 +57,13 @@ export default function CustomizedTimeline(props) {
         <TimelineSeparator>
           <TimelineConnector />
           <TimelineDot>
-            <Avatar src={x[7]} alt={x[1]} sx={{width: 48, height: 48}}></Avatar>
+          <StyledEventComponent
+								overlap="circular"
+								anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+								variant="dot">
+								<Avatar src={x[7]} alt={x[1]} sx={{width: 48, height: 48}}></Avatar>
+							</StyledEventComponent>
+            
             {/*<FastfoodIcon />*/}
           </TimelineDot>
           <TimelineConnector />
@@ -63,107 +78,7 @@ export default function CustomizedTimeline(props) {
 
 
       )}
-      <TimelineItem>
-        <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
-          align="right"
-          variant="body2"
-          color="text.secondary"
-        >
-          08 Oct 21
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot>
-            <FastfoodIcon />
-          </TimelineDot>
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
-          <Typography variant="h6" component="span">
-            Protest
-          </Typography>
-          <Typography>Organized by University of California</Typography>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-      <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
-          align="right"
-          variant="body2"
-          color="text.secondary"
-        >
-          08 Oct 21
-        </TimelineOppositeContent>
-        {/*}
-        <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
-          variant="body2"
-          color="text.secondary"
-        >
-          10:00 am
-        </TimelineOppositeContent>
-  */}
-        <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot color="primary">
-            <LaptopMacIcon />
-          </TimelineDot>
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
-          <Typography variant="h6" component="span">
-            Speech @ People's Park
-          </Typography>
-          <Typography>Because it&apos;s awesome!</Typography>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-      <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
-          align="right"
-          variant="body2"
-          color="text.secondary"
-        >
-          07 Oct 21
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot color="primary" variant="outlined">
-            <HotelIcon />
-          </TimelineDot>
-          <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
-          <Typography variant="h6" component="span">
-            World Peace
-          </Typography>
-          <Typography>Because you need rest</Typography>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-      <TimelineOppositeContent
-          sx={{ m: 'auto 0' }}
-          align="right"
-          variant="body2"
-          color="text.secondary"
-        >
-          06 Oct 21
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-          <TimelineDot color="secondary">
-            <RepeatIcon />
-          </TimelineDot>
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
-          <Typography variant="h6" component="span">
-            Repeat
-          </Typography>
-          <Typography>Because this is the life you love!</Typography>
-        </TimelineContent>
-      </TimelineItem>
+  
     </Timeline>
   );
 }

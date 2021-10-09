@@ -39,9 +39,11 @@ const socialIssueList = [
 
 const UserForm = (props) => {
     const {handleClose} = props
+
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
+    const {parentfn} = props;
 
 	const [socialIssueList, setData] = useState([]);
 	useEffect(async () => {
@@ -94,8 +96,7 @@ const UserForm = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("form values here ", formValues);
-        return;
-        
+
         async function postData(url = '', data = {}) {
             // Default options are marked with *
             const response = await fetch(url, {
