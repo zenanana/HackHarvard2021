@@ -6,13 +6,15 @@ import { Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/m
 
 export default function IssuesListComponent(props) {
     const { issuesList, issues } = props
+    if (issuesList == null) return null;
+    if (issuesList == []) return null;
+    if (issuesList.length == 0) return null;
     return (
         <div style={{display: 'flex', flexDirection: 'row', width: '70vw', overflow: 'scroll'}}>
-            {
-                issuesList.map((issue) => {
+            {issues != null &&
+                issues.map((i) => {
+                    if (issuesList)
                     // Should be replaced with a call to the API to get single issue by id
-                    for (let i = 0; i < issues.length; i++) {
-                        if (issues[i].id === issue) {
                             return (
                                 <motion.div
                                     initial={{ opacity: 0 }}
@@ -21,17 +23,17 @@ export default function IssuesListComponent(props) {
                                     whileHover={{ scale: 1.03 }}
                                     style={{margin: '7px'}}>
                                             <Card sx={{ maxWidth: 300 }}>
-                                                <Link to={`/issue/${issues[i].id}`}>
+                                                <Link to={`/issue/${issuesList[i - 1].id}`}>
                                                     <CardActionArea>
                                                         <CardMedia
                                                         component="img"
                                                         height="130"
-                                                        image={issues[i].image}
-                                                        alt={issues[i].title}
+                                                        image={issuesList[i - 1].image}
+                                                        alt={issuesList[i - 1].title}
                                                         />
                                                         <CardContent sx={{height: '15px'}}>
                                                         <Typography gutterBottom variant="body2">
-                                                            {issues[i].title}
+                                                            {issuesList[i - 1].title}
                                                         </Typography>
                                                         </CardContent>
                                                     </CardActionArea>
@@ -39,9 +41,8 @@ export default function IssuesListComponent(props) {
                                             </Card>
                                     </motion.div>
                             )
-                        }
-                    }
-                    return <></>;
+                        
+                    
                 })
             }
         </div>

@@ -5,7 +5,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-
 import HomeComponent from './Home/HomeComponent';
 import IssueComponent from './Issues/IssueComponent';
 import UserComponent from './Users/UserComponent';

@@ -33,7 +33,7 @@ def query_db(query, args=(), one=False, cmt=False):
 def get_db_user():
 	db = getattr(g, '_database_user', None)
 	if db is None:
-		db = g._database = sqlite3.connect(DB_USER)
+		db = g._database_user = sqlite3.connect(DB_USER)
 	return db
 
 def query_db_user(query, args=(), one=False, cmt=False):
@@ -48,7 +48,7 @@ def query_db_user(query, args=(), one=False, cmt=False):
 def get_db_event():
 	db = getattr(g, '_database_event', None)
 	if db is None:
-		db = g._database = sqlite3.connect(DB_EVENT)
+		db = g._database_event = sqlite3.connect(DB_EVENT)
 	return db
 
 def query_db_event(query, args=(), one=False, cmt=False):
@@ -64,8 +64,67 @@ def _getUser(userName):
 	x = query_db_user('SELECT * FROM user WHERE userName="{}"'.format(userName))
 	return x
 
+def _getAllUser():
+	x = query_db_user('SELECT * FROM user')
+	return x
+
+def _getUserID(userID):
+	x = query_db_user('SELECT * FROM user WHERE userID={}'.format(userID))
+	return x
+
+def _getNextUserID():
+	x = query_db_user('SELECT MAX(userID) FROM user')
+	if len(x) == 0 or x[0] is None or x[0][0] is None:
+		return 1
+	
+	app.logger.info("max id = {}".format(x))
+	return x[0][0] + 1
+
 def _getSI():
 	return query_db('SELECT * FROM si')
+
+### Gets the next SIID
+def _getNextSIID():
+	x = query_db('SELECT MAX(socialID) FROM si')
+	app.logger.info(x)
+	if (len(x) == 0 or x[0] is None or x[0][0] is None):
+		return 1
+	return x[0][0] + 1
+
+def _getNextEventID():
+	x = query_db_event('SELECT MAX(eventID) FROM event')
+	if (len(x) == 0):
+		return 1
+	return x[0][0] + 1
+
+def _getSIID(si_name):
+	app.logger.info('SELECT socialID FROM si WHERE title="{}"'.format(si_name))
+	x = query_db('SELECT socialID FROM si WHERE title="{}"'.format(si_name))
+	if (len(x) == 0):
+		return 0
+	return x[0][0]
+
+def _getSIbyID(siid):
+	app.logger.info('SELECT * FROM si WHERE socialID={}'.format(siid))
+	x = query_db('SELECT * FROM si WHERE socialID={}'.format(siid))
+	if (len(x) == 0):
+		return 0
+	return x[0]
+
+def _getCommentsForSI(siid):
+	app.logger.info(siid)
+	app.logger.info('SELECT * FROM event WHERE socialIssue={} AND type="comment"'.format(siid))
+	x = query_db_event('SELECT * FROM event WHERE socialIssue={} AND type="comment"'.format(siid))
+	app.logger.info(x)
+	return x
+
+def _getTimelineForSI(siid):
+	app.logger.info(siid)
+	app.logger.info('SELECT * FROM event WHERE socialIssue={} AND type!="comment"'.format(siid))
+	x = query_db_event('SELECT * FROM event WHERE socialIssue={} AND type!="comment"'.format(siid))
+	app.logger.info(x)
+	return x
+
 def _getEvent():
 	return query_db_event('SELECT * FROM event')
 
@@ -74,12 +133,48 @@ def _getEvent():
 ### GET A LIST ALL SOCIAL ISSUES
 @app.route("/list_si", methods=['GET'])
 def list_si():
-    return str(_getSI())
+    return json.dumps(list(_getSI()))
+
+### GET SOCIAL ISSUE BY ID
+@app.route("/get_si", methods=['GET'])
+def get_si():
+	app.logger.info("CALLED - get_si")
+	siid = request.args.get('siid')
+	x = _getSIbyID(int(siid))
+	app.logger.info("x {}".format(x))
+	res = x
+	return json.dumps(res)
+
+### GET COMMENT FOR SOCIAL ISSUE BY ID
+@app.route("/get_comments_for_si", methods=['GET'])
+def get_comments_for_si():
+	app.logger.info("CALLED - get_comments_for_si")
+	siid = request.args.get('siid')
+	x = _getCommentsForSI(int(siid))
+	app.logger.info("x {}".format(x))
+	res = x
+	return json.dumps(res)
 
 ### CREATE A SOCIAL ISSUE
 @app.route("/create_si", methods=['POST'])
 def create_si():
-    return 0
+	app.logger.info("CALLED - create_si")
+    
+    ### check if userName is taken
+	data = request.json
+	#app.logger.info("Data received = {}".format(data))
+	app.logger.info(type(data))
+	if ("title" not in data or "description" not in data or "date" not in data):
+		app.logger.info("not valid data")
+		return "Failed to add social issue"
+	if data["date"] == "":
+		data["date"] = datetime.datetime.now().strftime("%Y-%m-%d")
+	
+	siid = _getNextSIID()
+
+	picture = '' if ("picture" not in data) else data["picture"]
+	query_db('INSERT INTO si(socialID, date, title, description, picture) VALUES("{}", "{}", "{}", "{}", "{}")'.format(siid, data["date"], data["title"], data["description"], str(picture)), cmt=True)
+	return "Success"
 
 ### ISSUE PAGE ENDPOINTS
 
@@ -87,43 +182,90 @@ def create_si():
 def get_event():
     return str(_getEvent())
 
+### GET TIMELINE FOR SOCIAL ISSUE BY ID
+@app.route("/get_timeline_for_si", methods=['GET'])
+def get_timeline_for_si():
+	app.logger.info("CALLED - get_timeline_for_si")
+	siid = request.args.get('siid')
+	x = _getTimelineForSI(int(siid))
+	app.logger.info("x {}".format(x))
+	res = x
+	return json.dumps(res)
+
+
+
 @app.route("/create_event", methods=['POST'])
 def create_event():
-    app.logger.info("CALLED - create_event")
+	app.logger.info("CALLED - create_event")
 
-    #INSERT INTO event(eventID, date, type, socialIssue, userContributed, picture) VALUES(0, '2021-10-08', 'big', 0, '[0, 1]', '');
+	data = request.json
+	#app.logger.info("Data received = {}".format(data))
+	app.logger.info(type(data))
+	if ("title" not in data or "description" not in data or "date" not in data or "scale" not in data or "si" not in data):
+		app.logger.info("not valid data")
+		return "Failed to add event"
+	if data["date"] == "":
+		data["date"] = datetime.datetime.now().strftime("%Y-%m-%d")
+	
+	eventid = _getNextEventID()
+	app.logger.info("ADDING EVENT ID {}".format(eventid))
+	picture = '' if ("picture" not in data) else data["picture"]
+	app.logger.info('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], 2, str(picture)))
+	query_db_event('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], 2, str(picture)), cmt=True)
+	return "Success"
 
-    #data = request.json
-    #if ("eventID" not in data or "date" not in data or "type" not in data)
-    return 0
 
 ### USER PAGE ENDPOINTS
 
 @app.route("/create_user", methods=['POST'])
 def create_user():
-    app.logger.info("CALLED - create_user")
-    ### make USER ID AUTO INCREMENT
+	app.logger.info("CALLED - create_user")
+    
     ### check if userName is taken
-    data = request.json
-    if ("userID" not in data or "userName" not in data):
-        app.logger.info(request.form.get("userID"))
-        app.logger.info(request.form.get("userName"))
-        return "Failed to add contact"
-    ### edit this part
-    groupsChampioned = []
-    picture = '' if ("picture" not in data) else request.form.get("picture")
-    query_db_user('INSERT INTO user(userID, userName, groupsChampioned, picture) VALUES("{}", "{}", "{}", "{}")'.format(data["userID"], data["userName"], str(groupsChampioned), str(picture)), cmt=True)
-    return "Success"
+	data = request.json
+	#app.logger.info("Data received = {}".format(data))
+	app.logger.info(type(data))
+	if ("userName" not in data or "interest" not in data or "pronoun" not in data or "bio" not in data):
+		app.logger.info("userName not found in data")
+		return "Failed to add user"
+	### check repeated username
+	userID = _getNextUserID()
+	interest = data["interest"]
+
+	picture = '' if ("picture" not in data) else data["picture"]
+	app.logger.info('INSERT INTO user(userID, userName, interest, pronoun, bio, picture) VALUES({}, "{}", "{}", "{}", "{}", "{}")'.format(userID, data["userName"], str(interest), data["pronoun"], data["bio"], str(picture)))
+	query_db_user('INSERT INTO user(userID, userName, interest, pronoun, bio, picture) VALUES({}, "{}", "{}", "{}", "{}", "{}")'.format(userID, data["userName"], str(interest), data["pronoun"], data["bio"], str(picture)), cmt=True)
+	return "Success"
 
 @app.route("/get_user", methods=['GET'])
 def get_user():
-	app.logger.info("HI")
+	app.logger.info("CALLED - get_user")
 	userName = request.args.get('user')
 	x = _getUser(userName)
 	res = []
 	for j in x:
 		res.append(list(j))
-	app.logger.info("CALLED - get_user")
+	app.logger.info(x)
+	return json.dumps(res)
+
+@app.route("/list_user", methods=['GET'])
+def list_user():
+	app.logger.info("CALLED - list_user")
+	x = _getAllUser()
+	res = []
+	for j in x:
+		res.append(list(j))
+	app.logger.info(x)
+	return json.dumps(res)
+
+@app.route("/get_userID", methods=['GET'])
+def get_userID():
+	app.logger.info("CALLED - get_userID")
+	userID = int(request.args.get('userID'))
+	x = _getUserID(int(userID))
+	res = []
+	for j in x:
+		res.append(list(j))
 	app.logger.info(x)
 	return json.dumps(res)
 
