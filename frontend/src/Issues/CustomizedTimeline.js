@@ -12,6 +12,7 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import Typography from '@mui/material/Typography';
 import { Avatar } from '@mui/material';
+import StyledEventComponent from "../Shared/StyledEventComponent";
 
 export default function CustomizedTimeline(props) {
 
@@ -24,12 +25,20 @@ export default function CustomizedTimeline(props) {
             return res.json()
         }).then(res => {
             console.log(res);
+            res.sort(function compareFn(firstEl, secondEl){
+              if (firstEl[1] < secondEl[1]) return 1;
+              return -1;
+            });
+
             setTimelineData(res)
             console.log("TIME LINE DATA ", res);
             setTimelineLoading(false)
         });
   }, [])
 
+  console.log(
+    "timeline data ", timelineData
+  )
   console.log("mapper ", timelineData.map(x => x[0]));
 
   return (
@@ -48,7 +57,13 @@ export default function CustomizedTimeline(props) {
         <TimelineSeparator>
           <TimelineConnector />
           <TimelineDot>
-            <Avatar src={x[7]} alt={x[1]} sx={{width: 48, height: 48}}></Avatar>
+          <StyledEventComponent
+								overlap="circular"
+								anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+								variant="dot">
+								<Avatar src={x[7]} alt={x[1]} sx={{width: 48, height: 48}}></Avatar>
+							</StyledEventComponent>
+            
             {/*<FastfoodIcon />*/}
           </TimelineDot>
           <TimelineConnector />

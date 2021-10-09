@@ -102,8 +102,7 @@ const HomeForm = (props) => {
         postData('http://localhost:5000/create_si', formValues).then(data => {
             console.log(data); // JSON data parsed by `data.json()` call
         });
-        handleClose()
-
+        handleClose();
     };
 
     const onAutoChange = (event, values) => {

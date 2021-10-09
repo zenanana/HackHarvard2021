@@ -34,10 +34,10 @@ const IssueForm = (props) => {
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
 
-    const {issueName, issueID} = props;
+    const {issueName, issueID, parentfn} = props;
     console.log("HEREHERE ", issueName);
 
-    defaultValues["si"] = issueID;
+    defaultValues["si"] = parseInt(issueID);
 
 
     const fileToDataUri = (file) => new Promise((resolve, reject) => {
@@ -100,6 +100,8 @@ const IssueForm = (props) => {
         postData('http://localhost:5000/create_event', formValues).then(data => {
             console.log(data); // JSON data parsed by `data.json()` call
         });
+
+        parentfn();
 
     };
 

@@ -236,7 +236,7 @@ export default function UserComponent(props) {
                 </Fab>
                 <Dialog open={open} onClose={handleClose}>
                     <DialogTitle>Add new user</DialogTitle>
-                    <UserForm/>
+                    <UserForm parentfn={handleClose}/>
                     
                     <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>

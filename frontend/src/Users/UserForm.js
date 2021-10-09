@@ -37,10 +37,11 @@ const socialIssueList = [
 ];
 */
 
-const UserForm = () => {
+const UserForm = (props) => {
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
+    const {parentfn} = props;
 
 	const [socialIssueList, setData] = useState([]);
 	useEffect(async () => {
@@ -93,8 +94,7 @@ const UserForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("form values here ", formValues);
-        return;
-        
+
         async function postData(url = '', data = {}) {
             // Default options are marked with *
             const response = await fetch(url, {
@@ -115,6 +115,8 @@ const UserForm = () => {
         postData('http://localhost:5000/create_user', formValues).then(data => {
             console.log(data); // JSON data parsed by `data.json()` call
         });
+
+        parentfn();
 
 
     };
