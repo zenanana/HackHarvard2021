@@ -7,6 +7,15 @@ import { Avatar, Grid, Card, CardContent, CardMedia, CardActionArea, Typography,
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import IssuesListComponent from './IssuesListComponent';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function UserComponent(props) {
 
@@ -16,6 +25,16 @@ export default function UserComponent(props) {
     const [image, setImageData] = useState([]);
 
     const [issueData, setIssueData] = useState([]);
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
 	useEffect(async () => {
         const result = await fetch("http://localhost:5000/list_si").then(res => {
             return res.json()
@@ -191,7 +210,19 @@ export default function UserComponent(props) {
                         } */}
                     </div>
                 </Grid>
-                <FormDialog/>
+
+
+                <Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 5, right: 5, position: "fixed"}}>
+                    <AddIcon />
+                </Fab>
+                <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>Add new user</DialogTitle>
+                    <Form/>
+                    
+                    <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    </DialogActions>
+                </Dialog>
             </Grid>
         </div>
     );

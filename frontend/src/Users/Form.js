@@ -141,6 +141,7 @@ const Form = () => {
                     onChange={handleInputChange}
                     />
                 </Grid>
+                <br></br>
 
                 <Grid item>
                     <TextField
@@ -152,6 +153,7 @@ const Form = () => {
                     onChange={handleInputChange}
                     />
                 </Grid>
+                <br></br>
 
                 <Grid item>
                     <TextField

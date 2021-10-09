@@ -5,6 +5,17 @@ import { Link } from "react-router-dom";
 
 import { motion } from 'framer-motion'
 import FormDialog from './FormDialog';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Form from './Form'
 
 
 export default function HomeComponent(props) {
@@ -20,6 +31,17 @@ export default function HomeComponent(props) {
     }, [])
 	console.log("issueData ", issueData);
 	console.log("homeData ", homeData)
+
+	const [open, setOpen] = React.useState(false);
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+	
 	return (
 		<div>
     		<Grid container spacing={3}>
@@ -88,8 +110,25 @@ export default function HomeComponent(props) {
 						)
 					})
 				}
+
+
       		</Grid>
-			<FormDialog/>
+			{/*<FormDialog/>*/}
+			<Grid>
+				<Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 5, right: 5, position: "fixed"}}>
+					<AddIcon />
+				</Fab>
+				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+				<DialogTitle>Add new issue</DialogTitle>
+				<Form/>
+				
+				<DialogActions>
+				<Button onClick={handleClose}>Cancel</Button>
+				</DialogActions>
+				</Dialog>
+			</Grid>
+
+
     	</div>
   	);
 }

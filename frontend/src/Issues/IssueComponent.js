@@ -4,6 +4,17 @@ import { useParams } from "react-router";
 import CustomizedTimeline from "./CustomizedTimeline.js"
 import { Link } from "react-router-dom";
 import FormDialog from './FormDialog';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Form from './Form'
 
 export default function IssueComponent(props) {
     let { id } = useParams()
@@ -59,13 +70,23 @@ export default function IssueComponent(props) {
         });
     }, [])
 
+
+    const [open, setOpen] = React.useState(false);
+    const {issueID, issueName} = props
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
     return (
         <div>
-            <h1>Issue</h1>
-            <h1>{id}</h1>
             <Grid>
                 <Grid container spacing={3}>
-                    <Grid item xs={5} md={5}>
+                    <Grid item xs={6} md={6}>
                         {issueData == [] ? null :
                         <div>
                             <img src={issueData[4]} alt={issueData[2]} style={{width: '100%', borderRadius: '15px'}}></img>
@@ -101,14 +122,22 @@ export default function IssueComponent(props) {
                             }
                         </div>
                     </Grid>
-                    <Grid item xs={7} md={7}>
+                    <Grid item xs={6} md={6}>
                         <CustomizedTimeline issueID={id} issueName={issueData==[]?null:issueData[2]}/>
                     </Grid>
                 </Grid>
             </Grid>
-            <div>
-                <FormDialog issueID={id} issueName={issueData==[]?null:issueData[2]}/>
-            </div>
+
+            <Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 5, right: 5, position: "fixed"}}>
+                <AddIcon />
+            </Fab>
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+                <DialogTitle>Add new event</DialogTitle>
+                <Form issueID={issueID} issueName={issueName}/>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 }
