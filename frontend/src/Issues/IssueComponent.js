@@ -13,20 +13,17 @@ export default function IssueComponent(props) {
     const { homeData } = props
     const { issues, discussions, users } = homeData
 
-    console.log(discussions)
-
     return (
         <div>
             <Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={5} md={5}>
                         <img src={issues[id-1].image} alt={issues[id-1].name} style={{width: '100%'}}></img>
-                        <h1>{issues[id-1].name}</h1>
-                        <p>{issues[id-1].description}</p>
-                    </Grid>
-                    <Grid item xs={7} md={7}>
+                        <h1 style={{textAlign: "center"}}>{issues[id-1].name}</h1>
+                        <p style={{textAlign: "center"}}>{issues[id-1].description}</p>
+                        <br></br>
                         <h1 style={{textAlign: 'center'}}>What's Going On</h1>
-                        <div style={{display: "flex", flexDirection: 'column'}}>
+                        <div style={{display: "flex", flexDirection: 'column', height: '35vh', overflow: 'scroll'}}>
                             {
                                 discussions[id].map((discussion, index) => {
                                     return (
@@ -44,6 +41,9 @@ export default function IssueComponent(props) {
                                 })
                             }
                         </div>
+                    </Grid>
+                    <Grid item xs={7} md={7}>
+                        
                     </Grid>
                     
                 </Grid>
