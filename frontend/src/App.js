@@ -144,16 +144,18 @@ function App() {
       		</header> */}
 			  
 			  <Router>
-				<HeaderComponent issues={homeData.issues}></HeaderComponent>
 				<div>
 					<Switch>
 						<Route path="/issue/:id">
+                            <HeaderComponent issues={homeData.issues} searchbox={false}></HeaderComponent>
 							<IssueComponent homeData={homeData} />
 						</Route>
 						<Route path="/user/:id">
+                            <HeaderComponent issues={homeData.issues} searchbox={false}></HeaderComponent>
 							<UserComponent homeData={homeData} />
 						</Route>
 						<Route path="/">
+                            <HeaderComponent issues={homeData.issues} searchbox={true}></HeaderComponent>
 							<HomeComponent homeData={homeData} />
 						</Route>
 					</Switch>

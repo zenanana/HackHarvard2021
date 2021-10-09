@@ -153,7 +153,7 @@ export default function UserComponent(props) {
     //     //setData(result.data);
     // }, [])
     return (
-        <div>
+        <div style={{marginTop: '10px'}}>
             <Grid container>
                 <Grid item xs={4} md={4} style={{marginLeft: "15px"}}>
                     <div style={{display: 'flex', flexDirection: 'column'}}>

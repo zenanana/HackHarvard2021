@@ -1,11 +1,15 @@
-import { Avatar, Grid } from "@mui/material";
+import { Avatar, CircularProgress, Grid, SpeedDial, SpeedDialAction, SpeedDialIcon, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import CustomizedTimeline from "./CustomizedTimeline.js"
 import { Link } from "react-router-dom";
 import FormDialog from './FormDialog';
 import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from '@mui/icons-material/Add'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import InfoIcon from '@mui/icons-material/Info';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -20,16 +24,10 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CommentsComponent from "./CommentsComponent.js";
 
 export default function IssueComponent(props) {
     let { id } = useParams()
-    // api call to get issue by id. right now, we are using the hardcoded issues passed through props
-    useEffect(() => {
-        console.log('API Call')
-    }, [])
-
-    const { homeData } = props
-    const { issues, discussions, users } = homeData
 
     const [issueData, setData] = useState([]);
 	useEffect(async () => {
@@ -87,62 +85,95 @@ export default function IssueComponent(props) {
       setOpen(false);
     };
 
+    const [isTimelineLoading, setTimelineLoading] = useState(true);
+    const [commentsOpen, setCommentsOpen] = useState(false);
+
+    let speedDialIcons = [
+        {
+            icon: <AddIcon/>,
+            name: "Add Event/Comment",
+            onClick: handleClickOpen
+        },
+        {
+            icon: <DeleteIcon/>,
+            name: "Delete Issue",
+            onClick: () => {
+                console.log("Delete Issue")
+            }
+        },
+        {
+            icon: <EditIcon/>,
+            name: "Edit Issue",
+            onClick: () => {
+                console.log("Edit Issue")
+            }
+        }
+    ]
+
     return (
-        <div>
+        <div style={{marginTop: '10px'}}>
             <Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={6} md={6}>
-                        {issueData == [] ? null :
-                        <div>
-                            <img src={issueData[4]} alt={issueData[2]} style={{width: '100%', borderRadius: '15px'}}></img>
-                            <h1 style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[2]}</h1>
-                            <p style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[3]}</p>  
-                            </div>                      
+                        <ToggleButtonGroup
+                            value={commentsOpen}
+                            exclusive
+                            onChange={() => setCommentsOpen(!commentsOpen)}
+                            aria-label="left toggle"
+                            size="small"
+                            style={{marginBottom: "5px", marginLeft: "21.5vw"}}
+                            >
+                            <ToggleButton value={false} aria-label="issue">
+                                <InfoIcon />
+                            </ToggleButton>
+                            <ToggleButton value={true} aria-label="comments">
+                                <QuestionAnswerIcon />
+                            </ToggleButton>
+                        </ToggleButtonGroup>
+                        {(issueData === [] || commentsOpen)? null :
+                            <div>
+                                <img src={issueData[4]} alt={issueData[2]} style={{width: '100%', borderRadius: '15px'}}></img>
+                                <h1 style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[2]}</h1>
+                                <p style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[3]}</p>  
+                                </div>                      
                         }
-                        
-                        <br></br>
-                        <h1 style={{textAlign: 'center', fontFamily: 'Arial'}}>What's Going On</h1>
-                        <div style={{display: "flex", flexDirection: 'column', height: '35vh', overflow: 'scroll'}}>
-                            
-                            {   
-                                commentData.map((x, index) => {
-                                    if (allUserData == []) return null;
-                                    if (!('authorID' in x)) return null;
-                                    if (allUserData[x['authorID'] - 1] == null) return null;
-                                    console.log(commentData, "HERE");
-                                    console.log(x);
-                                    return (
-                                        <Accordion expanded={true}>
-                                            <AccordionSummary
-                                            aria-controls="panel1a-content"
-                                            id="panel1a-header"
-                                            style={{backgroundColor:"#E8EEFF"}}
-                                            >
-                                                <Link to={`/user/${x['authorID']}`} style={{display: 'flex', alignItems: 'center'}}>
-                                                    <Avatar alt={allUserData[x['authorID'] - 1][1]} src={allUserData[x['authorID'] - 1][5]}></Avatar>
-                                                    <b style={{fontFamily: "Arial", margin: '5px'}}>{allUserData[x['authorID'] - 1][1]}</b>
-                                                </Link>
-                                                </AccordionSummary>
-                                                <AccordionDetails
-                                                style={{backgroundColor:"#E8F5FF"}}>
-                                                <div style={{fontFamily:"Arial"}} dangerouslySetInnerHTML={{ __html: x['description']}} />
-                                                </AccordionDetails>
-                                        </Accordion>
-                                    )
-                                })
-                            }
-                            
-                        </div>
+                        {commentsOpen ? <CommentsComponent allUserData={allUserData} commentData={commentData}/> : null}
                     </Grid>
                     <Grid item xs={6} md={6}>
-                        <CustomizedTimeline issueID={id} issueName={issueData==[]?null:issueData[2]}/>
+                        {
+                            isTimelineLoading ? 
+                            (
+                                <CircularProgress style={{position: "absolute", top: "50vh", right: "25vw"}}></CircularProgress>
+                            ) : null
+                        }
+                        <div style={isTimelineLoading ? {visibility: 'hidden'} : {}}>
+                            <CustomizedTimeline issueID={id} issueName={issueData===[]?null:issueData[2]} setTimelineLoading={setTimelineLoading}/>
+                        </div>
                     </Grid>
                 </Grid>
             </Grid>
 
-            <Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 5, right: 5, position: "fixed"}}>
+            <SpeedDial
+                ariaLabel="SpeedDial basic example"
+                sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                icon={<SpeedDialIcon />}
+                >
+                {
+                    speedDialIcons.map((speedDialIcon) => (
+                        <SpeedDialAction
+                            key={speedDialIcon.name}
+                            icon={speedDialIcon.icon}
+                            tooltipTitle={speedDialIcon.name}
+                            onClick={speedDialIcon.onClick ? speedDialIcon.onClick : null}/>
+                    ))
+                }
+            </SpeedDial>
+
+                
+
+            {/* <Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 5, right: 5, position: "fixed"}}>
                 <AddIcon />
-            </Fab>
+            </Fab> */}
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>Add new event</DialogTitle>
                 <Form issueID={issueID} issueName={issueName}/>

@@ -13,6 +13,9 @@ import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import { ButtonUnstyled } from "@mui/core";
+import { IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add"
 
 const defaultValues = {
     title: "",
@@ -140,17 +143,15 @@ const Form = () => {
 
 
                 <Grid item>
-                    {dataUri == '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
+                    {dataUri === '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
                     <br></br>
                     <input type="file" onChange={(event) => onChange(event.target.files[0] || null)} />
                 </Grid>
 
-
                 <br></br>
-
-                <Button variant="contained" color="primary" type="submit">
-                    Submit
-                </Button>
+                <IconButton aria-label="add" type="submit" size="large">
+                    <AddIcon />
+                </IconButton>
             </Grid>
         </form>
     );

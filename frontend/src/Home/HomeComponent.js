@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Card, CardMedia, CardActionArea, CardContent, Typography } from "@mui/material";
+import { Grid, Card, CardMedia, CardActionArea, CardContent, Typography, SpeedDial, SpeedDialIcon, SpeedDialAction } from "@mui/material";
 
 import { Link } from "react-router-dom";
 
@@ -80,32 +80,6 @@ export default function HomeComponent(props) {
 											</Link>
 										</Card>
 								</motion.div>
-								{/* <motion.div
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									exit={{ opacity: 0 }}
-									whileHover={{ scale: 1.03 }}
-									style={{cursor: 'pointer', position: "relative"}}>
-									<img src={issue.image} alt={issue.name} style={{width: "100%"}} />
-									<motion.div
-										style={{display: "flex", width: "100%", height: "100%", opacity: 0, position: 'absolute', backgroundColor: 'rgba(126, 166, 156, 0.8)'}}
-										whileHover={{ opacity: 1, scale: 1.03 }}
-										transition={{ duration: 0.2 }}
-										onClick={() => {
-											changeModalOpacity(1);
-											changeModalVisibility("visible");
-										}}
-										>
-										<h2>dsafdsaf</h2>
-									</motion.div>
-								</motion.div> */}
-								{/* <Link to={`issues/${issue.id}`}>
-									<div style={{textAlign: "center"}}>
-										<img src={issue.image} alt={issue.name} style={{width: "100%"}} />
-										<h3>{issue.name}</h3>
-										<p>{issue.description}</p>
-									</div>
-								</Link> */}
 							</Grid>
 						)
 					})
@@ -115,9 +89,17 @@ export default function HomeComponent(props) {
       		</Grid>
 			{/*<FormDialog/>*/}
 			<Grid>
-				<Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 5, right: 5, position: "fixed"}}>
-					<AddIcon />
-				</Fab>
+				<SpeedDial
+					ariaLabel="SpeedDial basic example"
+					sx={{ position: 'absolute', bottom: 16, right: 16 }}
+					icon={<SpeedDialIcon />}
+					>
+					<SpeedDialAction
+						key={1}
+						icon={<AddIcon/>}
+						tooltipTitle={'Add Issue'}
+						onClick={handleClickOpen}/>
+				</SpeedDial>
 				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
 				<DialogTitle>Add new issue</DialogTitle>
 				<Form/>

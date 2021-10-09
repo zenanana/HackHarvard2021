@@ -15,7 +15,7 @@ import { Avatar } from '@mui/material';
 
 export default function CustomizedTimeline(props) {
 
-  const {issueID, issueName} = props;
+  const {issueID, issueName, setTimelineLoading} = props;
 
   const [timelineData, setTimelineData] = useState([]);
   console.log("ISSUE ID HERE", issueID)
@@ -26,6 +26,7 @@ export default function CustomizedTimeline(props) {
             console.log(res);
             setTimelineData(res)
             console.log("TIME LINE DATA ", res);
+            setTimelineLoading(false)
         });
   }, [])
 

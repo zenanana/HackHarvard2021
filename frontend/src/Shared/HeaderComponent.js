@@ -5,7 +5,7 @@ import { Autocomplete, TextField, Grid } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
 
 export default function HeaderComponent(props) {
-	const { issues } = props
+	const { issues, searchbox } = props
 	const history = useHistory()
 	// TODO: Mutate issues array into dictionary when using real database
 
@@ -19,7 +19,9 @@ export default function HeaderComponent(props) {
 				</Link>
 			</Grid>
 			<Grid item xs={4}>
-				<div style={{textAlign: 'end'}}>
+				{
+					searchbox ? (
+						<div style={{textAlign: 'end'}}>
 					<Autocomplete
 						freeSolo
 						disableClearable
@@ -45,6 +47,8 @@ export default function HeaderComponent(props) {
 						)}
 					/>
 				</div>
+					) : null
+				}
 			</Grid>
 		</Grid>
     )
