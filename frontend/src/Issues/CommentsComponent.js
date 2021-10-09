@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function CommentsComponent(props) {
     const {allUserData, commentData} = props
     return (
-        <><h1 style={{ textAlign: 'center', fontFamily: 'Arial' }}>What's Going On</h1><div style={{ display: "flex", flexDirection: 'column', height: '75vh', overflow: 'scroll' }}>
+        <><h1 style={{ textAlign: 'center' }}>What Others are Saying</h1><div style={{ display: "flex", flexDirection: 'column', height: '75vh', overflow: 'scroll' }}>
             {commentData.map((x, index) => {
                 if (allUserData === [])
                     return null;
@@ -29,7 +29,7 @@ export default function CommentsComponent(props) {
                         </AccordionSummary>
                         <AccordionDetails
                             style={{ backgroundColor: "#E8F5FF" }}>
-                            <div style={{ fontFamily: "Arial" }} dangerouslySetInnerHTML={{ __html: x['description'] }} />
+                            <div dangerouslySetInnerHTML={{ __html: x['description'] }} />
                         </AccordionDetails>
                     </Accordion>
                 );

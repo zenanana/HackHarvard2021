@@ -73,7 +73,7 @@ export default function HeaderComponent(props) {
 					<div style={{cssFloat:"left"}}>
 					<Avatar src={templogo} alt={"Logo"} sx={{width: 48, height: 48}}></Avatar>
 					</div>
-					<div style={{marginLeft: 10, marginTop:5, fontFamily: "Arial", fontSize: 24}}>Justice</div>
+					<div style={{marginLeft: 10, marginTop:5, fontSize: 24}}>Justice</div>
 				</Link>
 			</Grid>
 
