@@ -97,7 +97,7 @@ export default function HomeComponent() {
 				</SpeedDial>
 				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
 				<DialogTitle>Champion a new issue 🥇</DialogTitle>
-				<HomeForm/>
+				<HomeForm handleClose={handleClose}/>
 				
 				<DialogActions>
 				<Button onClick={handleClose}>Cancel</Button>

@@ -121,7 +121,7 @@ const IssueForm = (props) => {
         </Form.Field>
         <Form.Field>
           <label>Description</label>
-          <input placeholder='description' name="description" onChange={handleInputChange} />
+          <input placeholder='Description' name="description" onChange={handleInputChange} />
         </Form.Field>
         <Form.Field>
           <label>Social Issue</label>
@@ -129,14 +129,14 @@ const IssueForm = (props) => {
         </Form.Field>
         <Form.Field>
           <label>Scale</label>
-          <input placeholder="scale" name="scale" onChange={handleInputChange}/>
+          <input placeholder="Scale" name="scale" onChange={handleInputChange}/>
         </Form.Field>
         <Form.Field>
         {dataUri === '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
         <br></br>
         <input type="file" onChange={(event) => onChange(event.target.files[0] || null)} />
         </Form.Field>
-        <Button type='submit' onClick={handleSubmit}>Submit</Button>
+        <Button type='submit' onClick={handleSubmit} primary>Submit</Button>
       </Form>
       </div>
 

@@ -4,15 +4,10 @@ import FormDialog from './FormDialog';
 import { useParams } from 'react-router';
 
 import { Avatar, Grid, Card, CardContent, CardMedia, CardActionArea, Typography, getAccordionSummaryUtilityClass } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import IssuesListComponent from './IssuesListComponent';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
@@ -20,6 +15,7 @@ import AddIcon from '@mui/icons-material/Add';
 export default function UserComponent(props) {
 
     let { id } = useParams();
+    const { currentUser } = props;
 
     const [data, setData] = useState([null, null, null, '']);
     const [image, setImageData] = useState([]);

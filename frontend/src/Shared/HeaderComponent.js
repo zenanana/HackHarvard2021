@@ -7,6 +7,7 @@ import { Avatar } from '@mui/material';
 import { Link, useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
 import { styled } from "@mui/system";
+import StyledBadgeComponent from "./StyledBadgeComponent";
 
 export default function HeaderComponent(props) {
 	const { searchbox, currentUser } = props
@@ -36,44 +37,14 @@ export default function HeaderComponent(props) {
     }, [])
 	console.log("ALL ISSUE DATA: ", issues);
 
-
-	const StyledBadge = styled(Badge)(({ theme }) => ({
-		'& .MuiBadge-badge': {
-			backgroundColor: '#44b700',
-			color: '#44b700',
-			boxShadow: `0 0 0 2px`,
-			'&::after': {
-				position: 'absolute',
-				top: -0.5,
-				left: -1,
-				width: '100%',
-				height: '100%',
-				borderRadius: '50%',
-				animation: 'ripple 1.2s infinite ease-in-out',
-				border: '1px solid currentColor',
-				content: '""',
-			},
-		},
-		'@keyframes ripple': {
-			'0%': {
-				transform: 'scale(.8)',
-				opacity: 1,
-			},
-			'100%': {
-				transform: 'scale(2.4)',
-				opacity: 0,
-			},
-		},
-	}));
-
     return (
-        <Grid container spacing={2} style={{marginTop: '0px', border: '1px solid rgba(34,36,38,.15)', boxShadow: "0 1px 2px 0 rgb(34 36 38 / 15%)"}}>
+        <Grid container spacing={2} style={{marginTop: '0px', border: '1px solid rgba(34,36,38,.15)', boxShadow: "0 1px 2px 0 rgb(34 36 38 / 15%)", marginBottom: '20px'}}>
 			<Grid item xs={4}>
 				<Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
 					<div style={{cssFloat:"left"}}>
 					<Avatar src={templogo} alt={"Logo"} sx={{width: 48, height: 48}}></Avatar>
 					</div>
-					<div style={{marginLeft: 10, marginTop:5, fontSize: 24}}>Justice</div>
+					<div style={{marginLeft: 10, marginTop:10, fontSize: 24}}>Justice</div>
 				</Link>
 			</Grid>
 
@@ -122,12 +93,12 @@ export default function HeaderComponent(props) {
 							exit={{ opacity: 0 }}
 							whileHover={{ scale: 1.03 }}
 							style={{marginBottom: "10px"}}>
-							<StyledBadge
+							<StyledBadgeComponent
 								overlap="circular"
 								anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 								variant="dot">
 								<Avatar src={allUserData[currentUser][5]} alt={allUserData[currentUser][1]} sx={{width: 60, height: 60}}/>
-							</StyledBadge>
+							</StyledBadgeComponent>
 						</motion.div>
 					</Link>}
 				</div>

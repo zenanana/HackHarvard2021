@@ -24,7 +24,7 @@ export default function CommentsComponent(props) {
     const [commentConfirmationOpen, setCommentConfirmationOpen] = React.useState(false);
 
     return (
-        <><h1 style={{ textAlign: 'center' }}>What Others are Saying</h1><div style={{ display: "flex", flexDirection: 'column', height: '50vh', overflow: 'scroll' }}>
+        <><h1 style={{ textAlign: 'center' }}>What Others are Saying</h1><div style={{ display: "flex", flexDirection: 'column', height: '50vh', overflowY: 'auto' }}>
             {commentData.map((x, index) => {
                 if (allUserData === [])
                     return null;

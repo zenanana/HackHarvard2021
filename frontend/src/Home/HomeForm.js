@@ -37,7 +37,9 @@ const socialIssueList = [
     { title: 'Air Pollution', year: 2003,},
 ];
 
-const HomeForm = () => {
+const HomeForm = (props) => {
+    const {handleClose} = props
+
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
@@ -81,7 +83,6 @@ const HomeForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("formvalue here: ", formValues);
-        return;
         async function postData(url = '', data = {}) {
             // Default options are marked with *
             const response = await fetch(url, {
@@ -98,11 +99,10 @@ const HomeForm = () => {
             });
             return response.json(); // parses JSON response into native JavaScript objects
         }
-        
         postData('http://localhost:5000/create_si', formValues).then(data => {
             console.log(data); // JSON data parsed by `data.json()` call
         });
-
+        handleClose()
 
     };
 
@@ -124,14 +124,14 @@ const HomeForm = () => {
         </Form.Field>
         <Form.Field>
           <label>Description</label>
-          <input placeholder='description' name="description" onChange={handleInputChange} />
+          <input placeholder='Description' name="description" onChange={handleInputChange} />
         </Form.Field>
         <Form.Field>
         <label>Upload a thumbnail</label>
         {dataUri === '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
         <input type="file" onChange={(event) => onChange(event.target.files[0] || null)} />
         </Form.Field>
-        <Button type='submit' onClick={handleSubmit}>Submit</Button>
+        <Button type='submit' onClick={handleSubmit} primary>Submit</Button>
       </Form>
       </div>
     );
