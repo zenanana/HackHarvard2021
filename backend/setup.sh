@@ -31,3 +31,8 @@ INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, 
 INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES(7, '2021-10-06', 'comment', 4, 'Comment', "The War on Drugs is evidently killing more people than it claims to help. Let\'s stop this right now and start legalizing certain drugs such as weed.", 4, '');
 
 INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES(8, '2021-10-07', 'comment', 4, 'Comment', "Agreed. Ample scientific evidence for the benefits of certain drugs, such as LSD, mushrooms and weed, have been found. Let\'s not delay any further - there are people dying that could be saved by legalizaiton.", 3, '');
+
+INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES(9, '2021-10-07', 'small', 2, "Distribution of Food at Foothill", "Volunteers please gather at the entrance :)", 4, '');
+
+INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES(10, '2021-10-07', 'big', 2, "Speech @ People's Park", "People's Park must stay!", 1, '');
+

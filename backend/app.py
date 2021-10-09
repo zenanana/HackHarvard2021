@@ -94,7 +94,7 @@ def _getNextSIID():
 def _getNextEventID():
 	x = query_db_event('SELECT MAX(eventID) FROM event')
 	if (len(x) == 0):
-		return 0
+		return 1
 	return x[0][0] + 1
 
 def _getSIID(si_name):
@@ -118,6 +118,12 @@ def _getCommentsForSI(siid):
 	app.logger.info(x)
 	return x
 
+def _getTimelineForSI(siid):
+	app.logger.info(siid)
+	app.logger.info('SELECT * FROM event WHERE socialIssue={} AND type!="comment"'.format(siid))
+	x = query_db_event('SELECT * FROM event WHERE socialIssue={} AND type!="comment"'.format(siid))
+	app.logger.info(x)
+	return x
 
 def _getEvent():
 	return query_db_event('SELECT * FROM event')
@@ -176,6 +182,18 @@ def create_si():
 def get_event():
     return str(_getEvent())
 
+### GET TIMELINE FOR SOCIAL ISSUE BY ID
+@app.route("/get_timeline_for_si", methods=['GET'])
+def get_timeline_for_si():
+	app.logger.info("CALLED - get_timeline_for_si")
+	siid = request.args.get('siid')
+	x = _getTimelineForSI(int(siid))
+	app.logger.info("x {}".format(x))
+	res = x
+	return json.dumps(res)
+
+
+
 @app.route("/create_event", methods=['POST'])
 def create_event():
 	app.logger.info("CALLED - create_event")
@@ -192,8 +210,10 @@ def create_event():
 	eventid = _getNextEventID()
 	app.logger.info("ADDING EVENT ID {}".format(eventid))
 	picture = '' if ("picture" not in data) else data["picture"]
-	#query_db_event('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], 2, str(picture)), cmt=True)
+	app.logger.info('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], 2, str(picture)))
+	query_db_event('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], 2, str(picture)), cmt=True)
 	return "Success"
+
 
 ### USER PAGE ENDPOINTS
 

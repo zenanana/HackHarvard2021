@@ -20,7 +20,8 @@ const defaultValues = {
     scale: "big",
     si: 0,
     picture: "",
-    userID: 0,
+    userID: 1,
+    date: "2021-10-08"
 };
 
 
@@ -57,6 +58,7 @@ const Form = (props) => {
                 ...formValues,
                 picture: dataUri,
             });
+            console.log(dataUri)
         });
     
     }
@@ -93,7 +95,6 @@ const Form = (props) => {
         postData('http://localhost:5000/create_event', formValues).then(data => {
             console.log(data); // JSON data parsed by `data.json()` call
         });
-
 
     };
 

@@ -102,7 +102,7 @@ export default function IssueComponent(props) {
                         </div>
                     </Grid>
                     <Grid item xs={7} md={7}>
-                        <CustomizedTimeline/>
+                        <CustomizedTimeline issueID={id} issueName={issueData==[]?null:issueData[2]}/>
                     </Grid>
                 </Grid>
             </Grid>
