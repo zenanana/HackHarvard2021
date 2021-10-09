@@ -155,10 +155,6 @@ export default function UserComponent(props) {
                 </label>
                 <input type="submit" value="Submit" />
     </form>*/
-    
-    // hardcoded users
-    const { homeData } = props
-    const { issues, users } = homeData
 
     // const [data, setData] = useState([]);
     // useEffect(async () => {

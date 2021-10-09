@@ -18,8 +18,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Form from './Form'
 
 
-export default function HomeComponent(props) {
-	const { homeData } = props;
+export default function HomeComponent() {
 	const [issueData, setData] = useState([]);
 	useEffect(async () => {
         const result = await fetch("http://localhost:5000/list_si").then(res => {
@@ -30,7 +29,6 @@ export default function HomeComponent(props) {
         });
     }, [])
 	console.log("issueData ", issueData);
-	console.log("homeData ", homeData)
 
 	const [open, setOpen] = React.useState(false);
   
@@ -43,7 +41,7 @@ export default function HomeComponent(props) {
     };
 	
 	return (
-		<div>
+		<div style={{ marginLeft: '5vw' }}>
     		<Grid container spacing={3}>
 				<Grid item xs={12}>
 					<h2 style={{textAlign: "center", fontFamily:'Arial'}}>Trending Issues 🔥</h2>

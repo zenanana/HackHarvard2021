@@ -1,29 +1,19 @@
-import { Avatar, CircularProgress, Grid, SpeedDial, SpeedDialAction, SpeedDialIcon, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { CircularProgress, Grid, SpeedDial, SpeedDialAction, SpeedDialIcon, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import CustomizedTimeline from "./CustomizedTimeline.js"
-import { Link } from "react-router-dom";
-import FormDialog from './FormDialog';
-import Fab from '@mui/material/Fab';
+
+
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import InfoIcon from '@mui/icons-material/Info';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Form from './Form'
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CommentsComponent from "./CommentsComponent.js";
 
 export default function IssueComponent(props) {
@@ -108,6 +98,14 @@ export default function IssueComponent(props) {
             }
         }
     ]
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const handlePopoverOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handlePopoverClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <div style={{marginTop: '10px'}}>
