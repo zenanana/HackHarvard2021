@@ -176,7 +176,7 @@ export default function IssueComponent(props) {
             </Fab> */}
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>Add a new event for {issueData[2]}</DialogTitle>
-                <IssueForm issueID={id} issueName={issueData[2]}/>
+                <IssueForm issueID={id} issueName={issueData[2]} handleClose={handleClose}/>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>
