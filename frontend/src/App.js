@@ -20,15 +20,15 @@ function App() {
 					<Switch>
 						<Route path="/issue/:id">
                             <HeaderComponent searchbox={false} currentUser={currentUser}></HeaderComponent>
-							<IssueComponent/>
+							<IssueComponent currentUser={currentUser}/>
 						</Route>
 						<Route path="/user/:id">
                             <HeaderComponent searchbox={false} currentUser={currentUser}></HeaderComponent>
-							<UserComponent/>
+							<UserComponent currentUser={currentUser}/>
 						</Route>
 						<Route path="/">
                             <HeaderComponent searchbox={true} currentUser={currentUser}></HeaderComponent>
-							<HomeComponent/>
+							<HomeComponent currentUser={currentUser}/>
 						</Route>
 					</Switch>
 				</div>
