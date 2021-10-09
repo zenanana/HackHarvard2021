@@ -3,7 +3,7 @@ import Form from './Form';
 import FormDialog from './FormDialog';
 import { useParams } from 'react-router';
 
-import { Avatar, Grid, Card, CardContent, CardMedia, CardActionArea, Typography } from '@mui/material';
+import { Avatar, Grid, Card, CardContent, CardMedia, CardActionArea, Typography, getAccordionSummaryUtilityClass } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import IssuesListComponent from './IssuesListComponent';
@@ -14,6 +14,27 @@ export default function UserComponent(props) {
 
     const [data, setData] = useState([null, null, null, '']);
     const [image, setImageData] = useState([]);
+
+    const [issueData, setIssueData] = useState([]);
+	useEffect(async () => {
+        const result = await fetch("http://localhost:5000/list_si").then(res => {
+            return res.json()
+        }).then(res => {
+            let curarr = [];
+            for (var i = 0; i < res.length; i++){
+                curarr.push({
+                    id: res[i][0],
+                    date: res[i][1],
+                    title: res[i][2],
+                    description: res[i][3],
+                    image: res[i][4],
+                })
+            }
+            console.log("res here + ", res);
+            console.log("Curarr here", curarr);
+            setIssueData(curarr)
+        });
+    }, [])
 
     useEffect(async () => {
         const result = await fetch("http://localhost:5000/get_userID?userID=" + id).then(res => {
@@ -36,6 +57,12 @@ export default function UserComponent(props) {
         }
     };
     */
+
+    const toArray = (s) => {
+        if (s == null) return;
+        var ss = s.substring(1, s.length - 1);
+        return ss.split(',').map(Number);
+    }
 
     const fileToDataUri = (file) => new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -119,12 +146,12 @@ export default function UserComponent(props) {
                         */}
                         
                         <div style={{height: '40vh'}}>
-                            <Avatar src={users[id].avatar} alt={users[id].name} sx={{width: 300, height: 300}}></Avatar>
+                            <Avatar src={data[5]} alt={data[1]} sx={{width: 300, height: 300}}></Avatar>
                         </div>
                         <div style={{display: 'flex', flexDirection: 'column', height: '48vh'}}>
-                            <h2>{users[id].name}</h2>
-                            <p style={{fontStyle: 'italic'}}>{users[id].pronouns}</p>
-                            <p>{users[id].bio}</p>
+                            <h2>{data[1]}</h2>
+                            <p style={{fontStyle: 'italic'}}>{data[3]}</p>
+                            <p>{data[4]}</p>
                         </div>
                     </div>
                 </Grid>
@@ -133,13 +160,15 @@ export default function UserComponent(props) {
                         <h3 style={{marginBottom: '0px'}}>
                             Top Contributions
                         </h3>
-                        <IssuesListComponent issuesList={users[id].topIssues} issues={issues}></IssuesListComponent>
+                        <IssuesListComponent issuesList={issueData} issues={toArray(data[2])}></IssuesListComponent>
+
+                        
                     </div>
                     <div style={{height: '26vh'}}>
                         <h3 style={{marginBottom: '0px'}}>
                             Recent Contributions
                         </h3>
-                        <IssuesListComponent issuesList={users[id].recentIssues} issues={issues}></IssuesListComponent>
+                        
                     </div>
                     <div style={{height: '28vh'}}>
                         <h3 style={{marginBottom: '0px'}}>

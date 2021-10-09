@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -16,11 +16,14 @@ import Stack from '@mui/material/Stack';
 
 const defaultValues = {
     userName: "",
-    groupsChampioned: "",
+    pronoun: "",
+    bio: "",
+    interest: "",
     picture: ""
 };
 
 // get from backend
+/*
 const socialIssueList = [
     { title: 'Sustainability', year: 1994 },
     { title: 'Healthcare', year: 1972 },
@@ -31,11 +34,22 @@ const socialIssueList = [
     { title: 'Ethics of Science', year: 1994 },
     { title: 'Air Pollution', year: 2003,},
 ];
+*/
 
 const Form = () => {
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
+
+	const [socialIssueList, setData] = useState([]);
+	useEffect(async () => {
+        const result = await fetch("http://localhost:5000/list_si").then(res => {
+            return res.json()
+        }).then(res => {
+            console.log(res);
+            setData(res)
+        });
+    }, [])
 
 
     const fileToDataUri = (file) => new Promise((resolve, reject) => {
@@ -102,11 +116,16 @@ const Form = () => {
     };
 
     const onAutoChange = (event, values) => {
+        var curlist = [];
+        for (var i = 0; i < values.length; i++){
+            curlist.push(values[i][0]);
+        }
         setFormValues({
             ...formValues,
-            groupsChampioned: values
+            interest: curlist
         });
         console.log(values);
+        console.log(curlist)
     }
 
     return (
@@ -123,6 +142,28 @@ const Form = () => {
                     />
                 </Grid>
 
+                <Grid item>
+                    <TextField
+                    id="pronoun-input"
+                    name="pronoun"
+                    label="Pronoun"
+                    type="text"
+                    value={formValues.pronoun}
+                    onChange={handleInputChange}
+                    />
+                </Grid>
+
+                <Grid item>
+                    <TextField
+                    id="bio-input"
+                    name="bio"
+                    label="Bio"
+                    type="text"
+                    value={formValues.bio}
+                    onChange={handleInputChange}
+                    />
+                </Grid>
+
                 <br></br>
 
                 <Stack spacing={3} sx={{ width: 500 }}>
@@ -131,7 +172,7 @@ const Form = () => {
                         multiple
                         id="tags-outlined"
                         options={socialIssueList}
-                        getOptionLabel={(option) => option.title}
+                        getOptionLabel={(option) => option[2]}
                         defaultValue={[]}
                         filterSelectedOptions
                         onChange={onAutoChange}

@@ -64,14 +64,18 @@ def _getUser(userName):
 	x = query_db_user('SELECT * FROM user WHERE userName="{}"'.format(userName))
 	return x
 
+def _getAllUser():
+	x = query_db_user('SELECT * FROM user')
+	return x
+
 def _getUserID(userID):
 	x = query_db_user('SELECT * FROM user WHERE userID={}'.format(userID))
 	return x
 
 def _getNextUserID():
 	x = query_db_user('SELECT MAX(userID) FROM user')
-	if len(x) == 0:
-		return 0
+	if len(x) == 0 or x[0] is None or x[0][0] is None:
+		return 1
 	
 	app.logger.info("max id = {}".format(x))
 	return x[0][0] + 1
@@ -166,16 +170,16 @@ def create_user():
 	data = request.json
 	#app.logger.info("Data received = {}".format(data))
 	app.logger.info(type(data))
-	if ("userName" not in data):
+	if ("userName" not in data or "interest" not in data or "pronoun" not in data or "bio" not in data):
 		app.logger.info("userName not found in data")
-		return "Failed to add contact"
+		return "Failed to add user"
 	### check repeated username
 	userID = _getNextUserID()
-	### edit this part
-	groupsChampioned = []
+	interest = data["interest"]
 
 	picture = '' if ("picture" not in data) else data["picture"]
-	query_db_user('INSERT INTO user(userID, userName, groupsChampioned, picture) VALUES("{}", "{}", "{}", "{}")'.format(userID, data["userName"], str(groupsChampioned), str(picture)), cmt=True)
+	app.logger.info('INSERT INTO user(userID, userName, interest, pronoun, bio, picture) VALUES({}, "{}", "{}", "{}", "{}", "{}")'.format(userID, data["userName"], str(interest), data["pronoun"], data["bio"], str(picture)))
+	query_db_user('INSERT INTO user(userID, userName, interest, pronoun, bio, picture) VALUES({}, "{}", "{}", "{}", "{}", "{}")'.format(userID, data["userName"], str(interest), data["pronoun"], data["bio"], str(picture)), cmt=True)
 	return "Success"
 
 @app.route("/get_user", methods=['GET'])
@@ -189,11 +193,21 @@ def get_user():
 	app.logger.info(x)
 	return json.dumps(res)
 
+@app.route("/list_user", methods=['GET'])
+def list_user():
+	app.logger.info("CALLED - list_user")
+	x = _getAllUser()
+	res = []
+	for j in x:
+		res.append(list(j))
+	app.logger.info(x)
+	return json.dumps(res)
+
 @app.route("/get_userID", methods=['GET'])
 def get_userID():
 	app.logger.info("CALLED - get_userID")
-	userID = request.args.get('userID')
-	x = _getUserID(userID)
+	userID = int(request.args.get('userID'))
+	x = _getUserID(int(userID))
 	res = []
 	for j in x:
 		res.append(list(j))
