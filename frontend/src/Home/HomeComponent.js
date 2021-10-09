@@ -23,26 +23,27 @@ export default function HomeComponent(props) {
 									animate={{ opacity: 1 }}
 									exit={{ opacity: 0 }}
 									whileHover={{ scale: 1.03 }}>
-									<Link to={`/issue/${issue.id}`}>									
-										<Card sx={{ maxWidth: 345 }}>
-											<CardActionArea>
-												<CardMedia
-												component="img"
-												height="140"
-												image={issue.image}
-												alt={issue.name}
-												/>
-												<CardContent>
-													<Typography gutterBottom variant="h5" component="div">
-														{issue.name}
-													</Typography>
-													<Typography variant="body2" color="text.secondary">
-														{issue.description}
-													</Typography>
-												</CardContent>
-											</CardActionArea>
+										<Card sx={{ maxWidth: 345, maxHeight: 345 }}>
+											<Link to={`/issue/${issue.id}`}>					
+												<CardActionArea>
+													<CardMedia
+													component="img"
+													height="140"
+													width="140"
+													image={issue.image}
+													alt={issue.name}
+													/>
+													<CardContent>
+														<Typography gutterBottom variant="h5" component="div">
+															{issue.name}
+														</Typography>
+														<Typography variant="body2" color="text.secondary">
+															{issue.description}
+														</Typography>
+													</CardContent>
+												</CardActionArea>
+											</Link>
 										</Card>
-									</Link>
 								</motion.div>
 								{/* <motion.div
 									initial={{ opacity: 0 }}
