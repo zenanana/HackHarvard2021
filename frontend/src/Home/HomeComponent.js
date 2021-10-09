@@ -44,7 +44,7 @@ export default function HomeComponent() {
 		<div>
     		<Grid container spacing={3}>
 				<Grid item xs={12}>
-					<h2 style={{textAlign: "center", cursor: "default"}}>Trending Issues</h2>
+					<h2 style={{textAlign: "center", cursor: "default"}}>Trending Issues 🔥</h2>
 				</Grid>
 				{
 					issueData.map((issue, index) => {

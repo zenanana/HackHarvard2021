@@ -35,6 +35,28 @@ export default function UserComponent(props) {
       setOpen(false);
     };
 
+    const [contributionData, setContributionData] = useState([]);
+    useEffect(async () => {
+        const result = await fetch("http://localhost:5000/get_event_for_user?userid=" + id).then(res => {
+            return res.json()
+        }).then(res => {
+            console.log("RES here contribution data ", res);
+            var curdict = {}
+            for (var i = 0; i < res.length; i++){
+                if (res[i][3] in curdict) continue;
+                curdict[res[i][3]] = 1;
+            }
+            var curarr = [];
+            for (var i in curdict){
+                curarr.push(parseInt(i));
+            }
+            console.log(res);
+            console.log("curarr here", curarr)
+            setContributionData(curarr)
+            //setContributionData(res)
+        });
+    }, [])
+
 	useEffect(async () => {
         const result = await fetch("http://localhost:5000/list_si").then(res => {
             return res.json()
@@ -173,16 +195,19 @@ export default function UserComponent(props) {
                 <Grid item xs={7} md={7}>
                     <div style={{height: '28vh'}}>
                         <h3 style={{marginBottom: '0px'}}>
-                            Top Contributions
+                            Top Contributions 🏆
                         </h3>
-                        <IssuesListComponent issuesList={issueData} issues={toArray(data[2])}></IssuesListComponent>
+                        <IssuesListComponent issuesList={issueData} issues={contributionData}></IssuesListComponent>
+                        
 
                         
                     </div>
                     <div style={{height: '26vh'}}>
                         <h3 style={{marginBottom: '0px'}}>
-                            Recent Contributions
+                            Interests ❤️
                         </h3>
+                        <IssuesListComponent issuesList={issueData} issues={toArray(data[2])}></IssuesListComponent>
+                        
                         
                     </div>
                     <div style={{height: '28vh'}}>

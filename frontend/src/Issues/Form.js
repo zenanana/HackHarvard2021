@@ -33,6 +33,7 @@ const Form = (props) => {
     const [dataUri, setDataUri] = useState('')
 
     const {issueName, issueID} = props;
+    console.log("HEREHERE ", issueName);
 
     defaultValues["si"] = issueID;
 
@@ -152,13 +153,11 @@ const Form = (props) => {
                 <br></br>
                 <Grid item>
                 <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    id="si-select"
                     value={formValues.scale}
                     label="scale"
                     name="scale"
                     onChange={handleInputChange}
-                    fullWidth
                 >
                     <MenuItem value={"big"}>Big</MenuItem>
                     <MenuItem value={"small"}>Small</MenuItem>
