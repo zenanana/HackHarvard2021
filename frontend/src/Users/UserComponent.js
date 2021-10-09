@@ -239,7 +239,7 @@ export default function UserComponent(props) {
                     <UserForm/>
                     
                     <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose} color="error">Cancel</Button>
                     </DialogActions>
                 </Dialog>
             </Grid>

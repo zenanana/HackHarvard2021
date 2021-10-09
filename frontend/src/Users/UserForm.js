@@ -37,7 +37,8 @@ const socialIssueList = [
 ];
 */
 
-const UserForm = () => {
+const UserForm = (props) => {
+    const {handleClose} = props
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
@@ -116,7 +117,7 @@ const UserForm = () => {
             console.log(data); // JSON data parsed by `data.json()` call
         });
 
-
+        handleClose()
     };
 
     const onAutoChange = (event, values) => {
@@ -142,11 +143,11 @@ const UserForm = () => {
         </Form.Field>
         <Form.Field>
           <label>Pronoun</label>
-          <input placeholder='pronoun' name="pronoun" onChange={handleInputChange} />
+          <input placeholder='Pronoun' name="pronoun" onChange={handleInputChange} />
         </Form.Field>
         <Form.Field>
           <label>Bio</label>
-          <input placeholder="tell me your life story..." name="bio" onChange={handleInputChange}/>
+          <input placeholder="A little bit about yourself!" name="bio" onChange={handleInputChange}/>
         </Form.Field>
         <Form.Field>
         <div class="field">
@@ -159,11 +160,11 @@ const UserForm = () => {
         </div>
         </Form.Field>
         <Form.Field>
-            <label>Upload a profile pic!</label>
+            <label>Profile Picture</label>
         {dataUri === '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
         <input type="file" onChange={(event) => onChange(event.target.files[0] || null)} />
         </Form.Field>
-        <Button type='submit' onClick={handleSubmit}>Submit</Button>
+        <Button type='submit' onClick={handleSubmit} primary>Create!</Button>
       </Form>
       </div>
     );
