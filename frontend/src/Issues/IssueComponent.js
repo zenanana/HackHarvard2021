@@ -16,7 +16,6 @@ export default function IssueComponent(props) {
 
     return (
         <div>
-            <CustomizedTimeline/>
             <h1>Issue</h1>
             <h1>{id}</h1>
             <Grid>
@@ -47,9 +46,8 @@ export default function IssueComponent(props) {
                         </div>
                     </Grid>
                     <Grid item xs={7} md={7}>
-                        
+                        <CustomizedTimeline/>
                     </Grid>
-                    
                 </Grid>
             </Grid>
             <div>
