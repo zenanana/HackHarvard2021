@@ -34,7 +34,8 @@ const IssueForm = (props) => {
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
 
-    const {issueName, issueID, parentfn} = props;
+    const {issueName, issueID, handleClose} = props;
+  
     console.log("HEREHERE ", issueName);
 
     defaultValues["si"] = parseInt(issueID);
@@ -101,8 +102,7 @@ const IssueForm = (props) => {
             console.log(data); // JSON data parsed by `data.json()` call
         });
 
-        parentfn();
-
+        handleClose()
     };
 
     const onAutoChange = (event, values) => {

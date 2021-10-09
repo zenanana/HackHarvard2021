@@ -26,7 +26,7 @@ export default function FormDialog() {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add new user</DialogTitle>
-        <UserForm/>
+        <UserForm handleClose={handleClose}/>
         
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
