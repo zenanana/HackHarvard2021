@@ -15,7 +15,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Form from './Form'
+import HomeForm from './HomeForm'
 
 
 export default function HomeComponent() {
@@ -99,8 +99,8 @@ export default function HomeComponent() {
 						onClick={handleClickOpen}/>
 				</SpeedDial>
 				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-				<DialogTitle>Add new issue</DialogTitle>
-				<Form/>
+				<DialogTitle>Champion a new issue 🥇</DialogTitle>
+				<HomeForm/>
 				
 				<DialogActions>
 				<Button onClick={handleClose}>Cancel</Button>

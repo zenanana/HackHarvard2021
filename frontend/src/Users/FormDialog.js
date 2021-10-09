@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Form from './Form'
+import UserForm from './UserForm'
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
@@ -26,7 +26,7 @@ export default function FormDialog() {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add new user</DialogTitle>
-        <Form/>
+        <UserForm/>
         
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

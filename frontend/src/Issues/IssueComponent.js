@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import Form from './Form'
+import IssueForm from './IssueForm.js'
 import CommentsComponent from "./CommentsComponent.js";
 
 export default function IssueComponent(props) {
@@ -172,8 +172,8 @@ export default function IssueComponent(props) {
                 <AddIcon />
             </Fab> */}
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-                <DialogTitle>Add new event</DialogTitle>
-                <Form issueID={id} issueName={issueData[2]}/>
+                <DialogTitle>Add a new event for {issueData[2]}</DialogTitle>
+                <IssueForm issueID={id} issueName={issueData[2]}/>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>

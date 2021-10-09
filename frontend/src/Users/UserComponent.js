@@ -1,5 +1,5 @@
 import React, { useEffect, useState }from 'react';
-import Form from './Form';
+import UserForm from './UserForm';
 import FormDialog from './FormDialog';
 import { useParams } from 'react-router';
 
@@ -238,7 +238,7 @@ export default function UserComponent(props) {
                 </Fab>
                 <Dialog open={open} onClose={handleClose}>
                     <DialogTitle>Add new user</DialogTitle>
-                    <Form/>
+                    <UserForm/>
                     
                     <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>

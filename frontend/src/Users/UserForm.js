@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -8,23 +8,23 @@ import Radio from "@material-ui/core/Radio";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Slider from "@material-ui/core/Slider";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import { ButtonUnstyled } from "@mui/core";
-import { IconButton } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add"
+import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 const defaultValues = {
-    title: "",
-    description: "",
-    date: "",
+    userName: "",
+    pronoun: "",
+    bio: "",
+    interest: "",
     picture: ""
 };
 
 // get from backend
+/*
 const socialIssueList = [
     { title: 'Sustainability', year: 1994 },
     { title: 'Healthcare', year: 1972 },
@@ -35,11 +35,22 @@ const socialIssueList = [
     { title: 'Ethics of Science', year: 1994 },
     { title: 'Air Pollution', year: 2003,},
 ];
+*/
 
-const Form = () => {
+const UserForm = () => {
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
+
+	const [socialIssueList, setData] = useState([]);
+	useEffect(async () => {
+        const result = await fetch("http://localhost:5000/list_si").then(res => {
+            return res.json()
+        }).then(res => {
+            console.log("Social issues list ", res);
+            setData(res)
+        });
+    }, [])
 
 
     const fileToDataUri = (file) => new Promise((resolve, reject) => {
@@ -71,6 +82,8 @@ const Form = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log("in input change")
+        console.log(e.target.name, e.target.value);
         setFormValues({
             ...formValues,
             [name]: value,
@@ -79,7 +92,8 @@ const Form = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(formValues);
+        console.log("form values here ", formValues);
+        return;
         
         async function postData(url = '', data = {}) {
             // Default options are marked with *
@@ -98,7 +112,7 @@ const Form = () => {
             return response.json(); // parses JSON response into native JavaScript objects
         }
         
-        postData('http://localhost:5000/create_si', formValues).then(data => {
+        postData('http://localhost:5000/create_user', formValues).then(data => {
             console.log(data); // JSON data parsed by `data.json()` call
         });
 
@@ -106,55 +120,53 @@ const Form = () => {
     };
 
     const onAutoChange = (event, values) => {
+        var curlist = [];
+        for (var i = 0; i < values.length; i++){
+            curlist.push(values[i][0]);
+        }
         setFormValues({
             ...formValues,
-            groupsChampioned: values
+            interest: curlist
         });
         console.log(values);
+        console.log(curlist)
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Grid container alignItems="center" justify="center" direction="column">
-                <Grid item>
-                    <TextField
-                    id="title-input"
-                    name="title"
-                    label="Title"
-                    type="text"
-                    value={formValues.title}
-                    onChange={handleInputChange}
-                    />
-                </Grid>
-                <br></br>
+        <div style={{marginLeft:"auto", marginRight:"auto", width: "80%"}}>
 
-                <Grid item>
-                    <TextField
-                    id="description-input"
-                    name="description"
-                    label="Description"
-                    type="text"
-                    value={formValues.description}
-                    onChange={handleInputChange}
-                    />
-                </Grid>
-
-                <br></br>
-
-
-                <Grid item>
-                    {dataUri === '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
-                    <br></br>
-                    <input type="file" onChange={(event) => onChange(event.target.files[0] || null)} />
-                </Grid>
-
-                <br></br>
-                <IconButton aria-label="add" type="submit" size="large">
-                    <AddIcon />
-                </IconButton>
-            </Grid>
-        </form>
+        <Form>
+        <Form.Field>
+          <label>User Name</label>
+          <input placeholder='username' name="userName" onChange={handleInputChange} />
+        </Form.Field>
+        <Form.Field>
+          <label>Pronoun</label>
+          <input placeholder='pronoun' name="pronoun" onChange={handleInputChange} />
+        </Form.Field>
+        <Form.Field>
+          <label>Bio</label>
+          <input placeholder="tell me your life story..." name="bio" onChange={handleInputChange}/>
+        </Form.Field>
+        <Form.Field>
+        <div class="field">
+            <label>Interests 💕</label>
+            <select multiple class="ui dropdown" style={{height:100}} name="interest" onChange={handleInputChange}>
+                {
+                    socialIssueList.map((x) => <option key={x[0]} value={x[0]}>{x[2]}</option>)
+                }
+            </select>
+        </div>
+        </Form.Field>
+        <Form.Field>
+            <label>Upload a profile pic!</label>
+        {dataUri === '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
+        <input type="file" onChange={(event) => onChange(event.target.files[0] || null)} />
+        </Form.Field>
+        <Button type='submit' onClick={handleSubmit}>Submit</Button>
+      </Form>
+      </div>
     );
 };
 
-export default Form;
+export default UserForm;
