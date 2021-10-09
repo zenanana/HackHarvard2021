@@ -5,14 +5,49 @@ import { Link } from "react-router-dom";
 import { Box } from "@mui/system";
 
 export default function CommentsComponent(props) {
-    const {allUserData, commentData, currentUser} = props
+    const {allUserData, commentData, currentUser, issueID} = props
 
     const handleSubmitClick = () => {
         const comment = commentInputValue
         console.log(comment)
         // Call to API to add comment  
         // You can get id of current user from currentUser
+
+        const formValues = {
+            title: "Comment",
+            description: comment,
+            scale: "comment",
+            si: parseInt(issueID), //get this
+            picture: "",
+            userID: parseInt(currentUser) + 1,
+            date: "2021-10-08"
+        };
+        console.log("IS THIS FUNCTION CALLED MANY TIMES")
+        console.log(formValues, "here here her");
+
+        async function postData(url = '', data = {}) {
+            // Default options are marked with *
+            const response = await fetch(url, {
+              method: 'POST', // *GET, POST, PUT, DELETE, etc.
+              mode: 'cors', // no-cors, *cors, same-origin
+              cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+              credentials: 'same-origin', // include, *same-origin, omit
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              redirect: 'follow', // manual, *follow, error
+              referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+              body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+        }
+        
+        postData('http://localhost:5000/create_event', formValues).then(data => {
+            console.log(data); // JSON data parsed by `data.json()` call
+        });
+
         setCommentInputValue("")
+
     }
 
     const [commentInputValue, setCommentInputValue] = React.useState('');
@@ -24,7 +59,7 @@ export default function CommentsComponent(props) {
     const [commentConfirmationOpen, setCommentConfirmationOpen] = React.useState(false);
 
     return (
-        <><h1 style={{ textAlign: 'center' }}>What Others are Saying</h1><div style={{ display: "flex", flexDirection: 'column', height: '50vh', overflowY: 'auto' }}>
+        <><h1 style={{ textAlign: 'center' }}>Join the Conversation 🗣️</h1><div style={{ display: "flex", flexDirection: 'column', height: '50vh', overflow: 'scroll' }}>
             {commentData.map((x, index) => {
                 if (allUserData === [])
                     return null;
