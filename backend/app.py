@@ -79,8 +79,25 @@ def _getNextUserID():
 def _getSI():
 	return query_db('SELECT * FROM si')
 
+def _getNextSIID():
+	#x = query_db('SELECT MAX(socialID) FROM si')
+	x = query_db('SELECT * FROM si')
+	if (len(x) == 0):
+		return 0
+	return x[0][0] + 1
+
+def _getNextEventID():
+	x = query_db_event('SELECT MAX(eventID) FROM event')
+	if (len(x) == 0):
+		return 0
+	return x[0][0] + 1
+
 def _getSIID(si_name):
-	return query_db('SELECT socialID FROM si WHERE title="{}"'.format(si_name))
+	app.logger.info('SELECT socialID FROM si WHERE title="{}"'.format(si_name))
+	x = query_db('SELECT socialID FROM si WHERE title="{}"'.format(si_name))
+	if (len(x) == 0):
+		return 0
+	return x[0][0]
 
 def _getEvent():
 	return query_db_event('SELECT * FROM event')
@@ -95,7 +112,23 @@ def list_si():
 ### CREATE A SOCIAL ISSUE
 @app.route("/create_si", methods=['POST'])
 def create_si():
-    return 0
+	app.logger.info("CALLED - create_si")
+    
+    ### check if userName is taken
+	data = request.json
+	#app.logger.info("Data received = {}".format(data))
+	app.logger.info(type(data))
+	if ("title" not in data or "description" not in data or "date" not in data):
+		app.logger.info("not valid data")
+		return "Failed to add social issue"
+	if data["date"] == "":
+		data["date"] = datetime.datetime.now().strftime("%Y-%m-%d")
+	
+	siid = _getNextSIID()
+
+	picture = '' if ("picture" not in data) else data["picture"]
+	query_db('INSERT INTO si(socialID, date, title, description, picture) VALUES("{}", "{}", "{}", "{}", "{}")'.format(siid, data["date"], data["title"], data["description"], str(picture)), cmt=True)
+	return "Success"
 
 ### ISSUE PAGE ENDPOINTS
 
@@ -105,13 +138,22 @@ def get_event():
 
 @app.route("/create_event", methods=['POST'])
 def create_event():
-    app.logger.info("CALLED - create_event")
+	app.logger.info("CALLED - create_event")
 
-    #INSERT INTO event(eventID, date, type, socialIssue, userContributed, picture) VALUES(0, '2021-10-08', 'big', 0, '[0, 1]', '');
-
-    #data = request.json
-    #if ("eventID" not in data or "date" not in data or "type" not in data)
-    return 0
+	data = request.json
+	#app.logger.info("Data received = {}".format(data))
+	app.logger.info(type(data))
+	if ("title" not in data or "description" not in data or "date" not in data or "scale" not in data or "si" not in data):
+		app.logger.info("not valid data")
+		return "Failed to add event"
+	if data["date"] == "":
+		data["date"] = datetime.datetime.now().strftime("%Y-%m-%d")
+	
+	eventid = _getNextEventID()
+	app.logger.info("ADDING EVENT ID {}".format(eventid))
+	picture = '' if ("picture" not in data) else data["picture"]
+	query_db_event('INSERT INTO event(eventID, date, type, socialIssue, title, description, picture) VALUES({}, "{}", "{}", "{}", "{}", "{}", "{}")'.format(eventid, data["date"], data["scale"], "women rights", data["title"], data["description"], str(picture)), cmt=True)
+	return "Success"
 
 ### USER PAGE ENDPOINTS
 
@@ -121,7 +163,7 @@ def create_user():
     
     ### check if userName is taken
 	data = request.json
-	app.logger.info("Data received = {}".format(data))
+	#app.logger.info("Data received = {}".format(data))
 	app.logger.info(type(data))
 	if ("userName" not in data):
 		app.logger.info("userName not found in data")

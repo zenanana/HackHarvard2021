@@ -4,6 +4,7 @@ import { Grid, Card, CardMedia, CardActionArea, CardContent, Typography } from "
 import { Link } from "react-router-dom";
 
 import { motion } from 'framer-motion'
+import FormDialog from './FormDialog';
 
 
 export default function HomeComponent(props) {
@@ -14,7 +15,7 @@ export default function HomeComponent(props) {
             return res.json()
         }).then(res => {
             console.log(res);
-            setData(res[0])
+            setData(res)
         });
     }, [])
 	return (
@@ -86,6 +87,7 @@ export default function HomeComponent(props) {
 					})
 				}
       		</Grid>
+			<FormDialog/>
     	</div>
   	);
 }

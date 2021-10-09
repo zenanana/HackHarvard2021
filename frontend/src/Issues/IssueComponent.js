@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import CustomizedTimeline from "./CustomizedTimeline.js"
 import { Link } from "react-router-dom";
+import FormDialog from './FormDialog';
 
 export default function IssueComponent(props) {
     let { id } = useParams()
@@ -51,7 +52,7 @@ export default function IssueComponent(props) {
                 </Grid>
             </Grid>
             <div>
-
+                <FormDialog/>
             </div>
         </div>
     );

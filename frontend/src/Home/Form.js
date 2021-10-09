@@ -18,8 +18,6 @@ const defaultValues = {
     title: "",
     description: "",
     date: "",
-    scale: "big",
-    si: "",
     picture: ""
 };
 
@@ -97,7 +95,7 @@ const Form = () => {
             return response.json(); // parses JSON response into native JavaScript objects
         }
         
-        postData('http://localhost:5000/create_event', formValues).then(data => {
+        postData('http://localhost:5000/create_si', formValues).then(data => {
             console.log(data); // JSON data parsed by `data.json()` call
         });
 
@@ -137,51 +135,8 @@ const Form = () => {
                     />
                 </Grid>
 
-
-                <Grid item>
-                    <TextField
-                    id="si-input"
-                    name="si"
-                    label="Social Issue"
-                    type="text"
-                    //pass down the props
-                    defaultValue={"What is on this page"}
-                    disabled
-                    value={formValues.si}
-                    onChange={handleInputChange}
-                    />
-                </Grid>
-
                 <br></br>
-                <FormControl>
-                  <FormLabel>Scale</FormLabel>
-            <RadioGroup
-              name="scale"
-              value={formValues.scale}
-              onChange={handleInputChange}
-              row
-            >
-              <FormControlLabel
-                key="big"
-                value="big"
-                control={<Radio size="small" />}
-                label="Big"
-              />
-              <FormControlLabel
-                key="small"
-                value="small"
-                control={<Radio size="small" />}
-                label="Small"
-              />
-              <FormControlLabel
-                key="comment"
-                value="comment"
-                control={<Radio size="small" />}
-                label="Comment"
-              />
-            </RadioGroup>
-          </FormControl>
-          <br></br>
+
 
                 <Grid item>
                     {dataUri == '' ? null : <img width="200" height="200" src={dataUri} alt="avatar"/>}
@@ -201,4 +156,3 @@ const Form = () => {
 };
 
 export default Form;
-
