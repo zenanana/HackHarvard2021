@@ -173,7 +173,7 @@ export default function UserComponent(props) {
     return (
         <div style={{marginTop: '10px'}}>
             <Grid container>
-                <Grid item xs={4} md={4} style={{marginLeft: "15px"}}>
+                <Grid item xs={3.5} md={3.5} style={{marginLeft: "15px", borderRight: "1px solid rgba(34,36,38,.15)"}}>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                         {/*<Avatar src=data[3] alt={data[3]}></Avatar>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -182,19 +182,21 @@ export default function UserComponent(props) {
                         </div>
                         */}
                         
-                        <div style={{height: '40vh'}}>
-                            <Avatar src={data[5]} alt={data[1]} sx={{width: 300, height: 300}}></Avatar>
+                        <div style={{height: '40vh', borderBottom: "1px solid rgba(34,36,38,.15)"}}>
+                            <Avatar src={data[5]} alt={data[1]} sx={{width: 300, height: 300}} style={{ marginLeft: '10%' }}></Avatar>
                         </div>
                         <div style={{display: 'flex', flexDirection: 'column', height: '48vh'}}>
-                            <h2>{data[1]}</h2>
+                            <h1>{data[1]}</h1>
                             <p style={{fontStyle: 'italic'}}>{data[3]}</p>
                             <p>{data[4]}</p>
                         </div>
                     </div>
                 </Grid>
+                <Grid item xs={0.5} md={0.5}>
+                </Grid>
                 <Grid item xs={7} md={7}>
-                    <div style={{height: '28vh'}}>
-                        <h3 style={{marginBottom: '0px'}}>
+                    <div style={{height: '28vh', borderBottom: "1px solid rgba(34,36,38,.15)"}}>
+                        <h3 style={{marginBottom: '0px', marginTop: '7px'}}>
                             Top Contributions 🏆
                         </h3>
                         <IssuesListComponent issuesList={issueData} issues={contributionData}></IssuesListComponent>
@@ -202,15 +204,15 @@ export default function UserComponent(props) {
 
                         
                     </div>
-                    <div style={{height: '26vh'}}>
+                    <div style={{height: '28vh', borderBottom: "1px solid rgba(34,36,38,.15)"}}>
                         <h3 style={{marginBottom: '0px'}}>
-                            Interests ❤️
+                            Passions ❤️
                         </h3>
                         <IssuesListComponent issuesList={issueData} issues={toArray(data[2])}></IssuesListComponent>
                         
                         
                     </div>
-                    <div style={{height: '28vh'}}>
+                    <div style={{height: '26vh'}}>
                         <h3 style={{marginBottom: '0px'}}>
                             Friends/Collaborators
                         </h3>

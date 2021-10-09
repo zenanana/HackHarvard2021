@@ -18,6 +18,7 @@ import CommentsComponent from "./CommentsComponent.js";
 
 export default function IssueComponent(props) {
     let { id } = useParams()
+    const { currentUser } = props
 
     const [issueData, setData] = useState([]);
 	useEffect(async () => {
@@ -99,31 +100,23 @@ export default function IssueComponent(props) {
         }
     ]
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const handlePopoverOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handlePopoverClose = () => {
-        setAnchorEl(null);
-    };
-
     return (
-        <div style={{marginTop: '10px'}}>
+        <div style={{marginTop: '5vh'}} >
             <Grid>
                 <Grid container spacing={3}>
-                    <Grid item xs={6} md={6}>
+                    <Grid item xs={6.1} md={6.1} style={{paddingRight: '5px', marginLeft: '8px', paddingTop: "0px"}}>
                         <ToggleButtonGroup
                             value={commentsOpen}
                             exclusive
                             onChange={() => setCommentsOpen(!commentsOpen)}
                             aria-label="left toggle"
                             size="small"
-                            style={{marginBottom: "5px", marginLeft: "21.5vw"}}
+                            style={{marginBottom: "5px", marginLeft: "22.5vw"}}
                             >
                             <ToggleButton value={false} aria-label="issue">
                                 <InfoIcon />
                             </ToggleButton>
-                            <ToggleButton value={true} aria-label="comments">
+                            <ToggleButton value={true} aria-label="comments" disabled={allUserData.length === 0}>
                                 <QuestionAnswerIcon />
                             </ToggleButton>
                         </ToggleButtonGroup>
@@ -134,9 +127,10 @@ export default function IssueComponent(props) {
                                 <p style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[3]}</p>  
                                 </div>                      
                         }
-                        {commentsOpen ? <CommentsComponent allUserData={allUserData} commentData={commentData}/> : null}
+                        {commentsOpen ? <CommentsComponent allUserData={allUserData} commentData={commentData} currentUser={currentUser}/> : null}
                     </Grid>
-                    <Grid item xs={6} md={6}>
+                    <Grid item xs={0.2} md={0.2} style={{borderRight: "1px solid rgba(34,36,38,.15)"}}></Grid>
+                    <Grid item xs={5.2} md={5.2} style={{paddingTop: '0px'}}>
                         {
                             isTimelineLoading ? 
                             (
