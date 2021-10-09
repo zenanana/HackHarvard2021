@@ -82,6 +82,7 @@ export default function IssueComponent(props) {
                                 commentData.map((x, index) => {
                                     if (allUserData == []) return null;
                                     if (!('authorID' in x)) return null;
+                                    if (allUserData[x['authorID'] - 1] == null) return null;
                                     console.log(commentData, "HERE");
                                     console.log(x);
                                     return (
