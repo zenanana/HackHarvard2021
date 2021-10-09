@@ -22,9 +22,9 @@ export default function CommentsComponent(props) {
                             id="panel1a-header"
                             style={{ backgroundColor: "#E8EEFF" }}
                         >
-                            <Link to={`/user/${x['authorID']}`} style={{ display: 'flex', alignItems: 'center' }}>
+                            <Link to={`/user/${x['authorID']}`} style={{ display: 'flex', textDecoration: 'none', color: 'black', alignItems: 'center' }}>
                                 <Avatar alt={allUserData[x['authorID'] - 1][1]} src={allUserData[x['authorID'] - 1][5]}></Avatar>
-                                <b style={{ fontFamily: "Arial", margin: '5px' }}>{allUserData[x['authorID'] - 1][1]}</b>
+                                <b style={{ fontFamily: "Arial", margin: '10px' }}>{allUserData[x['authorID'] - 1][1]}</b>
                             </Link>
                         </AccordionSummary>
                         <AccordionDetails

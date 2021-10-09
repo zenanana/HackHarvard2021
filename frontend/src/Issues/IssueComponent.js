@@ -24,7 +24,7 @@ export default function IssueComponent(props) {
         const result = await fetch("http://localhost:5000/get_si?siid=" + id.toString()).then(res => {
             return res.json()
         }).then(res => {
-            console.log(res);
+            console.log("issue data here = ", res);
             setData(res)
         });
     }, [])
@@ -65,7 +65,6 @@ export default function IssueComponent(props) {
 
 
     const [open, setOpen] = React.useState(false);
-    const {issueID, issueName} = props
   
     const handleClickOpen = () => {
       setOpen(true);
@@ -174,7 +173,7 @@ export default function IssueComponent(props) {
             </Fab> */}
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>Add new event</DialogTitle>
-                <Form issueID={issueID} issueName={issueName}/>
+                <Form issueID={id} issueName={issueData[2]}/>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>
