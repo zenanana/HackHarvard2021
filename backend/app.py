@@ -1,9 +1,12 @@
 from flask import Flask, request, g, render_template
+from flask_cors import CORS
 import sqlite3
 import datetime
+import json
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 ### SQLITE3 DATABASES
 DB_SI = 'si.db'
@@ -114,10 +117,15 @@ def create_user():
 
 @app.route("/get_user", methods=['GET'])
 def get_user():
-    userName = request.args.get('user')
-    x = _getUser(userName)
-    app.logger.info("CALLED - create_user")
-    return str(x)
+	app.logger.info("HI")
+	userName = request.args.get('user')
+	x = _getUser(userName)
+	res = []
+	for j in x:
+		res.append(list(j))
+	app.logger.info("CALLED - get_user")
+	app.logger.info(x)
+	return json.dumps(res)
 
 ### MISC FUNCTIONS
 
