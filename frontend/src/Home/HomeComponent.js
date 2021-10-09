@@ -46,7 +46,7 @@ export default function HomeComponent(props) {
 		<div>
     		<Grid container spacing={3}>
 				<Grid item xs={12}>
-					<h2 style={{textAlign: "center"}}>Currently Trending Issues</h2>
+					<h2 style={{textAlign: "center", fontFamily:'Arial'}}>Trending Issues</h2>
 				</Grid>
 				{
 					issueData.map((issue, index) => {

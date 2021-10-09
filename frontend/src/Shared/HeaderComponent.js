@@ -10,7 +10,7 @@ export default function HeaderComponent(props) {
 	// TODO: Mutate issues array into dictionary when using real database
 
     return (
-        <Grid container spacing={2} style={{marginTop: '7px'}}>
+        <Grid container spacing={2} style={{backgroundColor: "#F4E8FF", marginTop: '7px'}}>
 			<Grid item xs={4}>
 			</Grid>
 			<Grid item xs={4}>

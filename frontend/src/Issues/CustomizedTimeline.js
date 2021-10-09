@@ -32,7 +32,7 @@ export default function CustomizedTimeline(props) {
   console.log("mapper ", timelineData.map(x => x[0]));
 
   return (
-    <Timeline>
+    <Timeline position="alternate">
       {timelineData.map(x => 
 
       <TimelineItem>

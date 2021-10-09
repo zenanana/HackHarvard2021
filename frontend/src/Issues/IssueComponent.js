@@ -15,6 +15,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Form from './Form'
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function IssueComponent(props) {
     let { id } = useParams()
@@ -90,16 +95,16 @@ export default function IssueComponent(props) {
                         {issueData == [] ? null :
                         <div>
                             <img src={issueData[4]} alt={issueData[2]} style={{width: '100%', borderRadius: '15px'}}></img>
-                            <h1 style={{textAlign: "center"}}>{issueData[2]}</h1>
-                            <p style={{textAlign: "center"}}>{issueData[3]}</p>  
+                            <h1 style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[2]}</h1>
+                            <p style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[3]}</p>  
                             </div>                      
                         }
                         
                         <br></br>
-                        <h1 style={{textAlign: 'center'}}>What's Going On</h1>
+                        <h1 style={{textAlign: 'center', fontFamily: 'Arial'}}>What's Going On</h1>
                         <div style={{display: "flex", flexDirection: 'column', height: '35vh', overflow: 'scroll'}}>
-                            {   
                             
+                            {   
                                 commentData.map((x, index) => {
                                     if (allUserData == []) return null;
                                     if (!('authorID' in x)) return null;
@@ -107,19 +112,26 @@ export default function IssueComponent(props) {
                                     console.log(commentData, "HERE");
                                     console.log(x);
                                     return (
-                                        <div>
-                                            <p>
+                                        <Accordion expanded={true}>
+                                            <AccordionSummary
+                                            aria-controls="panel1a-content"
+                                            id="panel1a-header"
+                                            style={{backgroundColor:"#E8EEFF"}}
+                                            >
                                                 <Link to={`/user/${x['authorID']}`} style={{display: 'flex', alignItems: 'center'}}>
                                                     <Avatar alt={allUserData[x['authorID'] - 1][1]} src={allUserData[x['authorID'] - 1][5]}></Avatar>
-                                                    <b style={{margin: '5px'}}>{allUserData[x['authorID'] - 1][1]}</b>
+                                                    <b style={{fontFamily: "Arial", margin: '5px'}}>{allUserData[x['authorID'] - 1][1]}</b>
                                                 </Link>
-                                                <br/>
-                                                <div dangerouslySetInnerHTML={{ __html: x['description']}} />
-                                            </p>
-                                        </div>
+                                                </AccordionSummary>
+                                                <AccordionDetails
+                                                style={{backgroundColor:"#E8F5FF"}}>
+                                                <div style={{fontFamily:"Arial"}} dangerouslySetInnerHTML={{ __html: x['description']}} />
+                                                </AccordionDetails>
+                                        </Accordion>
                                     )
                                 })
                             }
+                            
                         </div>
                     </Grid>
                     <Grid item xs={6} md={6}>
