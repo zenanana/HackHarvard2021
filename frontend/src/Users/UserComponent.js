@@ -1,5 +1,6 @@
 import React, { useEffect, useState }from 'react';
 import Form from './Form';
+import FormDialog from './FormDialog';
 import { useParams } from 'react-router';
 
 import { Avatar, Grid } from '@mui/material';
@@ -55,6 +56,7 @@ export default function UserComponent(props) {
         });
         
     }
+    console.log(data)
     
     /*
     return (
@@ -106,17 +108,19 @@ export default function UserComponent(props) {
             <Grid container spacing={3}>
                 <Grid item xs={4} md={4}>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
-                        <Avatar src={users[id].avatar} alt={users[id].name}></Avatar>
+                        <Avatar src={data[3]} alt={data[3]}></Avatar>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <h2>{users[id].name}</h2>
-                            <p style={{fontStyle: 'italic'}}>{users[id].pronouns}</p>
-                            <p>{users[id].bio}</p>
+                            <h2>{data[1]}</h2>
+
+                            {/*<p style={{fontStyle: 'italic'}}>{users[id].pronouns}</p>
+                            <p>{users[id].bio}</p>*/}
                         </div>
                     </div>
                 </Grid>
                 <Grid item xs={8} md={8}>
                     
                 </Grid>
+                <FormDialog/>
             </Grid>
         </div>
     );
