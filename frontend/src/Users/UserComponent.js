@@ -2,7 +2,9 @@ import React, { useEffect, useState }from 'react';
 import Form from './Form';
 import { useParams } from 'react-router';
 
-export default function UserComponent() {
+import { Avatar, Grid } from '@mui/material';
+
+export default function UserComponent(props) {
 
     let { id } = useParams();
 
@@ -54,6 +56,7 @@ export default function UserComponent() {
         
     }
     
+    /*
     return (
         <div>
             <h1>Picture: {data[3]}</h1>
@@ -67,18 +70,54 @@ export default function UserComponent() {
             <div>
                 {/*<img src={image}></img>
                 <h1>Select Image</h1>
-    <input type="file" name="myImage" onChange={onImageChange} />*/}
-                <img width="200" height="200" src={dataUri} alt="avatar"/>
+    <input type="file" name="myImage" onChange={onImageChange} />*/
+                /*<img width="200" height="200" src={dataUri} alt="avatar"/>
   <input type="file" onChange={(event) => onChange(event.target.files[0] || null)} />
-            </div>
+            </div>*/
 
-            {/*<form onSubmit={this.handleSubmit}>
+            /*<form onSubmit={this.handleSubmit}>
                 <label>
                 Name:
                 <input type="text" value={this.state.value} onChange={this.handleChange} />
                 </label>
                 <input type="submit" value="Submit" />
-</form>*/}
+    </form>*/
+    
+    // hardcoded users
+    const { homeData } = props
+    const { issues, users } = homeData
+
+    // const [data, setData] = useState([]);
+    // useEffect(async () => {
+    //     const result = await fetch("http://localhost:5000/get_user?user=bryan").then(res => {
+    //         return res.json()
+    //     }).then(res => {
+    //         console.log(res);
+    //         setData(res)
+    //     });
+    //     //console.log(result.json());
+    //     //console.log(result.body)
+    //     //console.log(result.json());
+    //     //console.log(result.data);
+    //     //setData(result.data);
+    // }, [])
+    return (
+        <div>
+            <Grid container spacing={3}>
+                <Grid item xs={4} md={4}>
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <Avatar src={users[id].avatar} alt={users[id].name}></Avatar>
+                        <div style={{display: 'flex', flexDirection: 'column'}}>
+                            <h2>{users[id].name}</h2>
+                            <p style={{fontStyle: 'italic'}}>{users[id].pronouns}</p>
+                            <p>{users[id].bio}</p>
+                        </div>
+                    </div>
+                </Grid>
+                <Grid item xs={8} md={8}>
+                    
+                </Grid>
+            </Grid>
         </div>
     );
 }
