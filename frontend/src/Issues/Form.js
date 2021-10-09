@@ -150,34 +150,22 @@ const Form = (props) => {
                 </Grid>
 
                 <br></br>
-                <FormControl>
-                  <FormLabel>Scale</FormLabel>
-            <RadioGroup
-              name="scale"
-              value={formValues.scale}
-              onChange={handleInputChange}
-              row
-            >
-              <FormControlLabel
-                key="big"
-                value="big"
-                control={<Radio size="small" />}
-                label="Big"
-              />
-              <FormControlLabel
-                key="small"
-                value="small"
-                control={<Radio size="small" />}
-                label="Small"
-              />
-              <FormControlLabel
-                key="comment"
-                value="comment"
-                control={<Radio size="small" />}
-                label="Comment"
-              />
-            </RadioGroup>
-          </FormControl>
+                <Grid item>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={formValues.scale}
+                    label="scale"
+                    name="scale"
+                    onChange={handleInputChange}
+                    fullWidth
+                >
+                    <MenuItem value={"big"}>Big</MenuItem>
+                    <MenuItem value={"small"}>Small</MenuItem>
+                    <MenuItem value={"comment"}>Comment</MenuItem>
+                </Select>
+                
+            </Grid>
           <br></br>
 
                 <Grid item>

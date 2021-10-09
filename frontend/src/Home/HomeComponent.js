@@ -59,7 +59,7 @@ export default function HomeComponent(props) {
 									exit={{ opacity: 0 }}
 									whileHover={{ scale: 1.03 }}>
 										<Card sx={{ maxWidth: 345, maxHeight: 345 }}>
-											<Link to={`/issue/${issue[0]}`}>					
+											<Link to={`/issue/${issue[0]}`} style={{ textDecoration: 'none', color: 'black' }}>					
 												<CardActionArea>
 													<CardMedia
 													component="img"
