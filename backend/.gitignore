@@ -1,0 +1,14 @@
+# mac
+.DS_Store
+
+# vscode
+.vscode/
+
+# environmental variables
+.env
+
+# virtual env
+sj/
+
+# cache
+__pycache__/
