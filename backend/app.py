@@ -217,17 +217,19 @@ def create_event():
 	data = request.json
 	#app.logger.info("Data received = {}".format(data))
 	app.logger.info(type(data))
-	if ("title" not in data or "description" not in data or "date" not in data or "scale" not in data or "si" not in data):
+	if ("title" not in data or "description" not in data or "date" not in data or "scale" not in data or "si" not in data or "userID" not in data):
 		app.logger.info("not valid data")
 		return "Failed to add event"
 	if data["date"] == "":
 		data["date"] = datetime.datetime.now().strftime("%Y-%m-%d")
-	
+	userID = int(data["userID"])
+	if data["userID"] == "":
+		userID = 3
 	eventid = _getNextEventID()
 	app.logger.info("ADDING EVENT ID {}".format(eventid))
 	picture = '' if ("picture" not in data) else data["picture"]
-	app.logger.info('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], 2, str(picture)))
-	query_db_event('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], 2, str(picture)), cmt=True)
+	app.logger.info('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], userID, str(picture)))
+	query_db_event('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], userID, str(picture)), cmt=True)
 	return "Success"
 
 

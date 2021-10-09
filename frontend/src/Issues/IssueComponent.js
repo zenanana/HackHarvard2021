@@ -127,7 +127,7 @@ export default function IssueComponent(props) {
                                 <p style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[3]}</p>  
                                 </div>                      
                         }
-                        {commentsOpen ? <CommentsComponent allUserData={allUserData} commentData={commentData} currentUser={currentUser}/> : null}
+                        {commentsOpen ? <CommentsComponent allUserData={allUserData} commentData={commentData} currentUser={currentUser} issueID={id}/> : null}
                     </Grid>
                     <Grid item xs={0.2} md={0.2} style={{borderRight: "1px solid rgba(34,36,38,.15)"}}></Grid>
                     <Grid item xs={5.2} md={5.2} style={{paddingTop: '0px'}}>
