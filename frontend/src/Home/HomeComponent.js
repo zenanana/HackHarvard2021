@@ -41,15 +41,14 @@ export default function HomeComponent() {
     };
 	
 	return (
-		<div style={{ marginLeft: '5vw' }}>
+		<div>
     		<Grid container spacing={3}>
 				<Grid item xs={12}>
-					<h2 style={{textAlign: "center", fontFamily:'Arial'}}>Trending Issues 🔥</h2>
+					<h2 style={{textAlign: "center", cursor: "default"}}>Trending Issues 🔥</h2>
 				</Grid>
 				{
 					issueData.map((issue, index) => {
 						return (
-							
 							<Grid item xs={6} sm={4} md={4} key={index}>
 								<motion.div
 									initial={{ opacity: 0 }}
@@ -82,8 +81,6 @@ export default function HomeComponent() {
 						)
 					})
 				}
-
-
       		</Grid>
 			{/*<FormDialog/>*/}
 			<Grid>
