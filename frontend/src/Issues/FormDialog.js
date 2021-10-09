@@ -8,8 +8,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Form from './Form'
 
-export default function FormDialog() {
+export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
+  const {issueID, issueName} = props
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,7 +27,7 @@ export default function FormDialog() {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add new event</DialogTitle>
-        <Form/>
+        <Form issueID={issueID} issueName={issueName}/>
         
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

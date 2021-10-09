@@ -17,28 +17,21 @@ import Stack from '@mui/material/Stack';
 const defaultValues = {
     title: "",
     description: "",
-    date: "",
     scale: "big",
-    si: "",
-    picture: ""
+    si: 0,
+    picture: "",
+    userID: 0,
 };
 
-// get from backend
-const socialIssueList = [
-    { title: 'Sustainability', year: 1994 },
-    { title: 'Healthcare', year: 1972 },
-    { title: 'Protest', year: 1974 },
-    { title: 'Women Rights', year: 2008 },
-    { title: 'Racial Justice', year: 1957 },
-    { title: "Crime", year: 1993 },
-    { title: 'Ethics of Science', year: 1994 },
-    { title: 'Air Pollution', year: 2003,},
-];
 
-const Form = () => {
+const Form = (props) => {
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
+
+    const {issueName, issueID} = props;
+
+    defaultValues["si"] = issueID;
 
 
     const fileToDataUri = (file) => new Promise((resolve, reject) => {
@@ -125,6 +118,7 @@ const Form = () => {
                     onChange={handleInputChange}
                     />
                 </Grid>
+                <br></br>
 
                 <Grid item>
                     <TextField
@@ -137,7 +131,7 @@ const Form = () => {
                     />
                 </Grid>
 
-
+                <br></br>
                 <Grid item>
                     <TextField
                     id="si-input"
@@ -145,9 +139,9 @@ const Form = () => {
                     label="Social Issue"
                     type="text"
                     //pass down the props
-                    defaultValue={"What is on this page"}
+                    defaultValue={issueName}
                     disabled
-                    value={formValues.si}
+                    value={issueName}
                     onChange={handleInputChange}
                     />
                 </Grid>

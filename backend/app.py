@@ -33,7 +33,7 @@ def query_db(query, args=(), one=False, cmt=False):
 def get_db_user():
 	db = getattr(g, '_database_user', None)
 	if db is None:
-		db = g._database = sqlite3.connect(DB_USER)
+		db = g._database_user = sqlite3.connect(DB_USER)
 	return db
 
 def query_db_user(query, args=(), one=False, cmt=False):
@@ -48,7 +48,7 @@ def query_db_user(query, args=(), one=False, cmt=False):
 def get_db_event():
 	db = getattr(g, '_database_event', None)
 	if db is None:
-		db = g._database = sqlite3.connect(DB_EVENT)
+		db = g._database_event = sqlite3.connect(DB_EVENT)
 	return db
 
 def query_db_event(query, args=(), one=False, cmt=False):
@@ -104,6 +104,21 @@ def _getSIID(si_name):
 		return 0
 	return x[0][0]
 
+def _getSIbyID(siid):
+	app.logger.info('SELECT * FROM si WHERE socialID={}'.format(siid))
+	x = query_db('SELECT * FROM si WHERE socialID={}'.format(siid))
+	if (len(x) == 0):
+		return 0
+	return x[0]
+
+def _getCommentsForSI(siid):
+	app.logger.info(siid)
+	app.logger.info('SELECT * FROM event WHERE socialIssue={} AND type="comment"'.format(siid))
+	x = query_db_event('SELECT * FROM event WHERE socialIssue={} AND type="comment"'.format(siid))
+	app.logger.info(x)
+	return x
+
+
 def _getEvent():
 	return query_db_event('SELECT * FROM event')
 
@@ -113,6 +128,26 @@ def _getEvent():
 @app.route("/list_si", methods=['GET'])
 def list_si():
     return json.dumps(list(_getSI()))
+
+### GET SOCIAL ISSUE BY ID
+@app.route("/get_si", methods=['GET'])
+def get_si():
+	app.logger.info("CALLED - get_si")
+	siid = request.args.get('siid')
+	x = _getSIbyID(int(siid))
+	app.logger.info("x {}".format(x))
+	res = x
+	return json.dumps(res)
+
+### GET COMMENT FOR SOCIAL ISSUE BY ID
+@app.route("/get_comments_for_si", methods=['GET'])
+def get_comments_for_si():
+	app.logger.info("CALLED - get_comments_for_si")
+	siid = request.args.get('siid')
+	x = _getCommentsForSI(int(siid))
+	app.logger.info("x {}".format(x))
+	res = x
+	return json.dumps(res)
 
 ### CREATE A SOCIAL ISSUE
 @app.route("/create_si", methods=['POST'])
@@ -157,7 +192,7 @@ def create_event():
 	eventid = _getNextEventID()
 	app.logger.info("ADDING EVENT ID {}".format(eventid))
 	picture = '' if ("picture" not in data) else data["picture"]
-	query_db_event('INSERT INTO event(eventID, date, type, socialIssue, title, description, picture) VALUES({}, "{}", "{}", "{}", "{}", "{}", "{}")'.format(eventid, data["date"], data["scale"], "women rights", data["title"], data["description"], str(picture)), cmt=True)
+	#query_db_event('INSERT INTO event(eventID, date, type, socialIssue, title, description, userID, picture) VALUES({}, "{}", "{}", {}, "{}", "{}", {}, "{}")'.format(eventid, data["date"], data["scale"], 1, data["title"], data["description"], 2, str(picture)), cmt=True)
 	return "Success"
 
 ### USER PAGE ENDPOINTS
