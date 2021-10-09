@@ -19,6 +19,72 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HomeComponent from './Home/HomeComponent';
 import IssueComponent from './Issues/IssueComponent';
 import UserComponent from './Users/UserComponent';
+import HeaderComponent from './Shared/HeaderComponent';
+
+const homeData = {
+	issues: [
+		{
+			"id": 1,
+			"name": "Climate Change",
+			"description": "Earth is warming up!",
+			"image": "https://climate.nasa.gov/system/content_pages/main_images/1320_effects-image.jpg"
+		},
+		{
+			"id": 2,
+			"name": "Global Warming",
+			"description": "Earth is warming up!",
+			"image": "https://climate.nasa.gov/system/content_pages/main_images/1320_effects-image.jpg"
+		},
+		{
+			"id": 3,
+			"name": "Global Warming",
+			"description": "Earth is warming up!",
+			"image": "https://climate.nasa.gov/system/content_pages/main_images/1320_effects-image.jpg"
+		},
+		{
+			"id": 4,
+			"name": "Global Warming",
+			"description": "Earth is warming up!",
+			"image": "https://climate.nasa.gov/system/content_pages/main_images/1320_effects-image.jpg"
+		}
+	],
+
+	discussions: {
+		// sort according to date of post?
+		'1': [
+			{
+				author: 'Sophie',
+				authorId: '10',
+				content: 'Down with global warming! Find out more about how big oil companies harm the planet <a href="https://www.youtube.com/watch?v=uKxyLmbOc0Q" target="_blank">here</a>!'
+			},
+			{
+				author: 'Rin',
+				authorId: '11',
+				content: 'Agreed! Let\'s march this Saturday morning!'
+			}
+		]
+	},
+
+	users: {
+		'10': {
+			name: 'Sophie',
+			avatar: 'https://ghiblimerchandise.com/wp-content/uploads/2021/06/Why-did-Sophies-age-keep-changing3-1024x576.jpg',
+			pronouns: 'she/her',
+			bio: 'Love howling, moving, and castles!',
+			topIssues: [3, 4],
+			interestedIssues: [3]
+		},
+		'11': {
+			name: 'Rin',
+			avatar: 'https://i.pinimg.com/originals/23/0d/3c/230d3c51e51f16034b97aa6aa8e65246.jpg',
+			pronouns: 'he/him',
+			bio: 'Curry cup noodles & camping! 🍜⛺⛰️',
+			topIssues: [1, 2],
+			interestedIssues: [1, 2, 3]
+		}
+	}
+		
+}
 
 function App() {
 	return (
@@ -48,37 +114,17 @@ function App() {
       		</header> */}
 			  
 			  <Router>
-				<Grid item xs={12}>
-					<Link to="/">
-						<h1 style={{textAlign: "center"}}>Logo</h1>
-					</Link>
-			  	</Grid>
+				<HeaderComponent></HeaderComponent>
 				<div>
-					{/* <nav>
-					<ul>
-						<li>
-							<Link to="/">Home</Link>
-						</li>
-						<li>
-							<Link to="/about">About</Link>
-						</li>
-						<li>
-							<Link to="/users">Users</Link>
-						</li>
-					</ul>
-					</nav> */}
-
-					{/* A <Switch> looks through its children <Route>s and
-						renders the first one that matches the current URL. */}
 					<Switch>
-						<Route path="/issues/:id">
-							<IssueComponent />
+						<Route path="/issue/:id">
+							<IssueComponent homeData={homeData} />
 						</Route>
-						<Route path="/users/:id">
-							<UserComponent />
+						<Route path="/user/:id">
+							<UserComponent homeData={homeData} />
 						</Route>
 						<Route path="/">
-							<HomeComponent />
+							<HomeComponent homeData={homeData} />
 						</Route>
 					</Switch>
 				</div>
