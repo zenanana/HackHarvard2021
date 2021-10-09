@@ -1,4 +1,4 @@
-import { CircularProgress, Grid, SpeedDial, SpeedDialAction, SpeedDialIcon, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { CircularProgress, DialogContent, DialogContentText, Grid, SpeedDial, SpeedDialAction, SpeedDialIcon, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import CustomizedTimeline from "./CustomizedTimeline.js"
@@ -78,17 +78,26 @@ export default function IssueComponent(props) {
     const [isTimelineLoading, setTimelineLoading] = useState(true);
     const [commentsOpen, setCommentsOpen] = useState(false);
 
+    // START DELETE ISSUE LOGIC
+    const [deleteConfirmationOpen, setDeleteConfirmationOpen] = React.useState(false);
+    const handleDeleteClick = () => {
+        // TODO: API CALL TO DELETE ISSUE
+
+    }
+    // END DELTE ISSUE LOGIC
+
+
     let speedDialIcons = [
         {
             icon: <AddIcon/>,
-            name: "Add Event/Comment",
+            name: "Add Event",
             onClick: handleClickOpen
         },
         {
             icon: <DeleteIcon/>,
             name: "Delete Issue",
             onClick: () => {
-                console.log("Delete Issue")
+                setDeleteConfirmationOpen(true)
             }
         },
         {
@@ -170,6 +179,31 @@ export default function IssueComponent(props) {
                 <IssueForm issueID={id} issueName={issueData[2]}/>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog
+                open={deleteConfirmationOpen}
+                onClose={() => setDeleteConfirmationOpen(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Are you sure you want to delete this issue?"}
+                </DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    This action cannot be undone. All data related to this issue will be deleted.
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={() => setDeleteConfirmationOpen(false)}>Cancel</Button>
+                <Button onClick={() => {
+                    setDeleteConfirmationOpen(false)
+                    handleDeleteClick()
+                    }} autoFocus color="error">
+                    Delete
+                </Button>
                 </DialogActions>
             </Dialog>
         </div>

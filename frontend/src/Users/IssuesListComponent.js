@@ -10,7 +10,7 @@ export default function IssuesListComponent(props) {
     if (issuesList == []) return null;
     if (issuesList.length == 0) return null;
     return (
-        <div style={{display: 'flex', flexDirection: 'row', width: '70vw', overflow: 'scroll'}}>
+        <div style={{display: 'flex', flexDirection: 'row', width: '70vw', overflowX: 'auto'}}>
             {issues != null &&
                 issues.map((i) => {
                     if (issuesList)
