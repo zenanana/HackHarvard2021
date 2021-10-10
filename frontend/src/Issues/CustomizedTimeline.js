@@ -59,6 +59,10 @@ export default function CustomizedTimeline(props) {
   )
   console.log("mapper ", timelineData.map(x => x[0]));
 
+  let today = new Date('10 October 2021');
+  today = today.toISOString().split('T')[0];
+  console.log("TODAY + ", today);
+
   return (
     <Timeline position="alternate">
       {timelineData.map(x => 
@@ -74,26 +78,40 @@ export default function CustomizedTimeline(props) {
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot>
-          <StyledEventComponent
-								overlap="circular"
-								anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-								variant="dot">
-								<Avatar src={x[7]} alt={x[1]} sx={{width: 48, height: 48}}></Avatar>
-							</StyledEventComponent>
+          <TimelineDot variant='outlined' color="primary" >
+            {(x[1] == today && x[2] == 'big') ?
+                      <StyledEventComponent
+                      overlap="circular"
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      variant="dot">
+                      <Avatar src={x[7]} alt={x[1]} sx={{width: 60, height: 60}}></Avatar>
+                    </StyledEventComponent>
+                    :
+                    (x[1] == today && x[2] == 'small')?
+                    <StyledEventComponent
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    variant="dot">
+                    <Avatar src={x[7]} alt={x[1]} sx={{width: 36, height: 36}}></Avatar>
+                  </StyledEventComponent>:
+                  (x[2] == 'small')?
+                    <Avatar src={x[7]} alt={x[1]} sx={{width: 36, height: 36}}></Avatar>
+                    :
+                    <Avatar src={x[7]} alt={x[1]} sx={{width: 60, height: 60}}></Avatar>
+            }
+
             
             {/*<FastfoodIcon />*/}
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '35px', px: 2 }}>
           <Typography variant="h6" component="span">
             {x[4]}
           </Typography>
           <Typography>{x[5]}</Typography>
         </TimelineContent>
       </TimelineItem>
-
 
       )}
   
