@@ -156,8 +156,8 @@ export default function IssueComponent(props) {
                         {(issueData === [] || commentsOpen)? null :
                             <div>
                                 <img src={issueData[4]} alt={issueData[2]} style={{width: '100%', borderRadius: '15px'}}></img>
-                                <h1 style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[2]}</h1>
-                                <p style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[3]}</p>  
+                                <h1 style={{textAlign: "center"}}>{issueData[2]}</h1>
+                                <p style={{textAlign: "center"}}>{issueData[3]}</p>  
                                 </div>                      
                         }
                         {commentsOpen ? <CommentsComponent allUserData={allUserData} commentData={commentData} currentUser={currentUser} issueID={id} fetchAllCommentData={fetchAllCommentData}/> : null}
@@ -179,7 +179,7 @@ export default function IssueComponent(props) {
 
             <SpeedDial
                 ariaLabel="SpeedDial basic example"
-                sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                sx={{ position: 'fixed', bottom: 16, right: 16 }}
                 icon={<SpeedDialIcon />}
                 >
                 {
@@ -193,16 +193,11 @@ export default function IssueComponent(props) {
                 }
             </SpeedDial>
 
-                
-
-            {/* <Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 5, right: 5, position: "fixed"}}>
-                <AddIcon />
-            </Fab> */}
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>Add a new event for {issueData[2]}</DialogTitle>
                 <IssueForm issueID={id} issueName={issueData[2]} handleClose={handleClose} setRefresh={setRefreshTimeline}/>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose} color="error">Cancel</Button>
                 </DialogActions>
             </Dialog>
 

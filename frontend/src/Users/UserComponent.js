@@ -1,9 +1,8 @@
 import React, { useEffect, useState }from 'react';
 import UserForm from './UserForm';
-import FormDialog from './FormDialog';
 import { useParams } from 'react-router';
 
-import { Avatar, Grid, Card, CardContent, CardMedia, CardActionArea, Typography, getAccordionSummaryUtilityClass } from '@mui/material';
+import { Avatar, Grid } from '@mui/material';
 import IssuesListComponent from './IssuesListComponent';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -182,8 +181,10 @@ export default function UserComponent(props) {
                             <Avatar src={data[5]} alt={data[1]} sx={{width: 300, height: 300}} style={{ marginLeft: '10%' }}></Avatar>
                         </div>
                         <div style={{display: 'flex', flexDirection: 'column', height: '48vh'}}>
-                            <h1>{data[1]}</h1>
-                            <p style={{fontStyle: 'italic'}}>{data[3]}</p>
+                            <h1 style={{paddingTop: "20px"}}>{data[1]}</h1>
+                            <p style={{fontStyle: 'italic', borderBottom: "1px solid rgba(34,36,38,.15)", paddingBottom: "20px"}}>{data[3]}</p>
+
+                            <h2 style={{marginTop: "10px"}}>About {data[1]}</h2>
                             <p>{data[4]}</p>
                         </div>
                     </div>
@@ -191,17 +192,14 @@ export default function UserComponent(props) {
                 <Grid item xs={0.5} md={0.5}>
                 </Grid>
                 <Grid item xs={7} md={7}>
-                    <div style={{height: '28vh', borderBottom: "1px solid rgba(34,36,38,.15)"}}>
-                        <h3 style={{marginBottom: '0px', marginTop: '7px'}}>
+                    <div style={{height: '28vh'}}>
+                        <h3 style={{marginBottom: '0px', marginTop: '7px', borderBottom: "1px solid rgba(34,36,38,.15)"}}>
                             Top Contributions 🏆
                         </h3>
-                        <IssuesListComponent issuesList={issueData} issues={contributionData}></IssuesListComponent>
-                        
-
-                        
+                        <IssuesListComponent issuesList={issueData} issues={contributionData}></IssuesListComponent>                        
                     </div>
-                    <div style={{height: '28vh', borderBottom: "1px solid rgba(34,36,38,.15)"}}>
-                        <h3 style={{marginBottom: '0px'}}>
+                    <div style={{height: '28vh'}}>
+                        <h3 style={{marginBottom: '0px', paddingTop: '5px', borderBottom: "1px solid rgba(34,36,38,.15)"}}>
                             Passions ❤️
                         </h3>
                         <IssuesListComponent issuesList={issueData} issues={toArray(data[2])}></IssuesListComponent>
@@ -209,29 +207,14 @@ export default function UserComponent(props) {
                         
                     </div>
                     <div style={{height: '26vh'}}>
-                        <h3 style={{marginBottom: '0px'}}>
+                        <h3 style={{marginBottom: '0px', paddingTop: '5px', borderBottom: "1px solid rgba(34,36,38,.15)"}}>
                             Friends/Collaborators
                         </h3>
-                        {/* {
-                            users[id].friends.map((friend, index) => {
-                                return (
-                                    <div key={index} style={{display: 'flex', flexDirection: 'row', marginBottom: '10px'}}>
-                                        <Avatar src={friend.avatar} alt={friend.name} sx={{width: 50, height: 50}}></Avatar>
-                                        <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px'}}>
-                                            <Link to={`/users/${friend.id}`}>
-                                                <h4>{friend.name}</h4>
-                                            </Link>
-                                            <p style={{fontStyle: 'italic'}}>{friend.pronouns}</p>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        } */}
                     </div>
                 </Grid>
 
 
-                <Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 5, right: 5, position: "fixed"}}>
+                <Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 16, right: 16, position: "fixed"}}>
                     <AddIcon />
                 </Fab>
                 <Dialog open={open} onClose={handleClose}>

@@ -31,10 +31,10 @@ export default function IssuesListComponent(props) {
                                                         image={issuesList[i - 1].image}
                                                         alt={issuesList[i - 1].title}
                                                         />
-                                                        <CardContent sx={{height: '15px'}}>
-                                                        <Typography gutterBottom variant="body2">
-                                                            {issuesList[i - 1].title}
-                                                        </Typography>
+                                                        <CardContent sx={{height: '15px'}} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                                                            <Typography gutterBottom variant="body2" style={{color: "black"}}>
+                                                                {issuesList[i - 1].title}
+                                                            </Typography>
                                                         </CardContent>
                                                     </CardActionArea>
                                                 </Link>

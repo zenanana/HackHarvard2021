@@ -1,19 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Grid from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Slider from "@material-ui/core/Slider";
-//import Button from "@material-ui/core/Button";
-import Chip from '@mui/material/Chip';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 
 const defaultValues = {
     userName: "",
@@ -139,12 +125,12 @@ const UserForm = (props) => {
 
         <Form>
         <Form.Field>
-          <label>User Name</label>
-          <input placeholder='username' name="userName" onChange={handleInputChange} />
+          <label>Username</label>
+          <input placeholder='Username' name="Username" onChange={handleInputChange} />
         </Form.Field>
         <Form.Field>
           <label>Pronoun</label>
-          <input placeholder='Pronoun' name="pronoun" onChange={handleInputChange} />
+          <input placeholder='Pronouns' name="Pronouns" onChange={handleInputChange} />
         </Form.Field>
         <Form.Field>
           <label>Bio</label>

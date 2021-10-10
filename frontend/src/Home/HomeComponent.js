@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Card, CardMedia, CardActionArea, CardContent, Typography, SpeedDial, SpeedDialIcon, SpeedDialAction } from "@mui/material";
+import { Grid, Card, CardMedia, CardActionArea, CardContent, Typography } from "@mui/material";
 
 import { Link } from "react-router-dom";
 
 import { motion } from 'framer-motion'
-import FormDialog from './FormDialog';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import HomeForm from './HomeForm'
 
@@ -93,23 +88,15 @@ export default function HomeComponent() {
       		</Grid>
 			{/*<FormDialog/>*/}
 			<Grid>
-				<SpeedDial
-					ariaLabel="SpeedDial basic example"
-					sx={{ position: 'absolute', bottom: 16, right: 16 }}
-					icon={<SpeedDialIcon />}
-					>
-					<SpeedDialAction
-						key={1}
-						icon={<AddIcon/>}
-						tooltipTitle={'Add Issue'}
-						onClick={handleClickOpen}/>
-				</SpeedDial>
+				<Fab color="primary" aria-label="add" onClick={handleClickOpen} style={{bottom: 16, right: 16, position: "fixed"}}>
+                    <AddIcon />
+                </Fab>
 				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
 				<DialogTitle>Champion a new issue 🥇</DialogTitle>
 				<HomeForm handleClose={handleClose} fetchIssuesData={fetchIssuesData}/>
 				
 				<DialogActions>
-				<Button onClick={handleClose}>Cancel</Button>
+				<Button onClick={handleClose} color="error">Cancel</Button>
 				</DialogActions>
 				</Dialog>
 			</Grid>

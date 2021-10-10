@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Input, InputAdornment, InputLabel, TextField } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import React from "react";
 import { Link } from "react-router-dom";
@@ -84,7 +84,7 @@ export default function CommentsComponent(props) {
                         >
                             <Link to={`/user/${x['authorID']}`} style={{ display: 'flex', textDecoration: 'none', color: 'black', alignItems: 'center' }}>
                                 <Avatar alt={allUserData[x['authorID'] - 1][1]} src={allUserData[x['authorID'] - 1][5]}></Avatar>
-                                <b style={{ fontFamily: "Arial", margin: '10px' }}>{allUserData[x['authorID'] - 1][1]}</b>
+                                <b style={{ margin: '10px' }}>{allUserData[x['authorID'] - 1][1]}</b>
                             </Link>
                         </AccordionSummary>
                         <AccordionDetails
@@ -117,7 +117,7 @@ export default function CommentsComponent(props) {
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={() => setCommentConfirmationOpen(false)}>Cancel</Button>
+                <Button onClick={() => setCommentConfirmationOpen(false)} color="error">Cancel</Button>
                 <Button onClick={() => {
                     setCommentConfirmationOpen(false)
                     handleSubmitClick()

@@ -29,7 +29,7 @@ export default function FormDialog() {
         <HomeForm/>
         
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} color="error">Cancel</Button>
         </DialogActions>
       </Dialog>
     </div>
