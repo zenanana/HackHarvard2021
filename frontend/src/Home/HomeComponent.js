@@ -30,6 +30,15 @@ export default function HomeComponent() {
     }, [])
 	console.log("issueData ", issueData);
 
+	const fetchIssuesData = async () => {
+        const result = await fetch("http://localhost:5000/list_si").then(res => {
+            return res.json()
+        }).then(res => {
+            console.log(res);
+            setData(res)
+        });
+    }
+
 	const [open, setOpen] = React.useState(false);
   
     const handleClickOpen = () => {
@@ -97,7 +106,7 @@ export default function HomeComponent() {
 				</SpeedDial>
 				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
 				<DialogTitle>Champion a new issue 🥇</DialogTitle>
-				<HomeForm handleClose={handleClose}/>
+				<HomeForm handleClose={handleClose} fetchIssuesData={fetchIssuesData}/>
 				
 				<DialogActions>
 				<Button onClick={handleClose}>Cancel</Button>

@@ -16,7 +16,7 @@ import StyledEventComponent from "../Shared/StyledEventComponent";
 
 export default function CustomizedTimeline(props) {
 
-  const {issueID, issueName, setTimelineLoading} = props;
+  const {issueID, issueName, setTimelineLoading, refresh, setRefresh} = props;
 
   const [timelineData, setTimelineData] = useState([]);
   console.log("ISSUE ID HERE", issueID)
@@ -35,6 +35,24 @@ export default function CustomizedTimeline(props) {
             setTimelineLoading(false)
         });
   }, [])
+
+  useEffect(async () => {
+        setTimelineLoading(true)
+        const result = await fetch("http://localhost:5000/get_timeline_for_si?siid=" + issueID).then(res => {
+            return res.json()
+        }).then(res => {
+            console.log(res);
+            res.sort(function compareFn(firstEl, secondEl){
+              if (firstEl[1] < secondEl[1]) return 1;
+              return -1;
+            });
+
+            setTimelineData(res)
+            console.log("TIME LINE DATA ", res);
+            setTimelineLoading(false)
+            setRefresh(false)
+        });
+  }, [refresh])
 
   console.log(
     "timeline data ", timelineData

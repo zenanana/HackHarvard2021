@@ -5,11 +5,10 @@ import { Link } from "react-router-dom";
 import { Box } from "@mui/system";
 
 export default function CommentsComponent(props) {
-    const {allUserData, commentData, currentUser, issueID} = props
+    const {allUserData, commentData, currentUser, issueID, fetchAllCommentData} = props
 
     const handleSubmitClick = () => {
         const comment = commentInputValue
-        console.log(comment)
         // Call to API to add comment  
         // You can get id of current user from currentUser
 
@@ -38,13 +37,20 @@ export default function CommentsComponent(props) {
               redirect: 'follow', // manual, *follow, error
               referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
               body: JSON.stringify(data) // body data type must match "Content-Type" header
-            });
-            return response.json(); // parses JSON response into native JavaScript objects
+            }).then((result) => {
+                fetchAllCommentData()
+                return result
+            })
+
+            // fetchAllCommentData()
+
+            return response.json()
+            ; // parses JSON response into native JavaScript objects
         }
         
         postData('http://localhost:5000/create_event', formValues).then(data => {
             console.log(data); // JSON data parsed by `data.json()` call
-        });
+        })
 
         setCommentInputValue("")
 
@@ -90,7 +96,7 @@ export default function CommentsComponent(props) {
             })}
         </div>
             <div>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end', margin: '0px 1.4vw 0px 1vw'}}>
+                <Box sx={{ display: 'flex', alignItems: 'flex-end', margin: '1.5vh 1.4vw 0px 1vw'}}>
                     <Avatar src={allUserData[currentUser][5]} style={{marginRight: '5px'}}></Avatar>
                     <TextField  style={{margin: "0px 10px"}} id="comment field" label="Write a comment..." variant="standard" rows={4} multiline fullWidth value={commentInputValue} onChange={handleCommentInputChange}/>
                     <Button onClick={() => setCommentConfirmationOpen(true)} endIcon={<AddCommentIcon/>}>Comment</Button>

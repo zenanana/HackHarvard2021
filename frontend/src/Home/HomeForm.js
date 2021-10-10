@@ -38,7 +38,7 @@ const socialIssueList = [
 ];
 
 const HomeForm = (props) => {
-    const {handleClose} = props
+    const {handleClose, fetchIssuesData} = props
 
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
@@ -96,6 +96,9 @@ const HomeForm = (props) => {
               redirect: 'follow', // manual, *follow, error
               referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
               body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((result) => {
+                fetchIssuesData()
+                return result
             });
             return response.json(); // parses JSON response into native JavaScript objects
         }

@@ -30,11 +30,11 @@ const defaultValues = {
 
 
 const IssueForm = (props) => {
+    const {issueName, issueID, handleClose, setRefresh} = props;
+
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
     const [dataUri, setDataUri] = useState('')
-
-    const {issueName, issueID, handleClose} = props;
   
     console.log("HEREHERE ", issueName);
 
@@ -94,6 +94,9 @@ const IssueForm = (props) => {
               redirect: 'follow', // manual, *follow, error
               referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
               body: JSON.stringify(data) // body data type must match "Content-Type" header
+            }).then((result) => {
+                setRefresh(true);
+                return result
             });
             return response.json(); // parses JSON response into native JavaScript objects
         }

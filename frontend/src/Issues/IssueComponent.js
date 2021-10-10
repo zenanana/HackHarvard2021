@@ -64,6 +64,28 @@ export default function IssueComponent(props) {
         });
     }, [])
 
+    const fetchAllCommentData = async () => {
+        const result = await fetch("http://localhost:5000/get_comments_for_si?siid=" + id.toString()).then(res => {
+            return res.json()
+        }).then(res => {
+            console.log("commentData ", res);
+            var curarr = [];
+            for (var i = 0; i < res.length; i++){
+                curarr.push({
+                    id: res[i][0],
+                    date: res[i][1],
+                    type: res[i][2],
+                    socialID: res[i][3],
+                    title: res[i][4],
+                    description: res[i][5],
+                    authorID: res[i][6]
+                })
+            }
+            setCommentData(curarr)
+            console.log("curarr here, ", curarr);
+        });
+    }
+
 
     const [open, setOpen] = React.useState(false);
   
@@ -85,6 +107,8 @@ export default function IssueComponent(props) {
 
     }
     // END DELTE ISSUE LOGIC
+
+    const [refreshTimeline, setRefreshTimeline] = useState(false);
 
 
     let speedDialIcons = [
@@ -136,7 +160,7 @@ export default function IssueComponent(props) {
                                 <p style={{textAlign: "center", fontFamily: 'Arial'}}>{issueData[3]}</p>  
                                 </div>                      
                         }
-                        {commentsOpen ? <CommentsComponent allUserData={allUserData} commentData={commentData} currentUser={currentUser} issueID={id}/> : null}
+                        {commentsOpen ? <CommentsComponent allUserData={allUserData} commentData={commentData} currentUser={currentUser} issueID={id} fetchAllCommentData={fetchAllCommentData}/> : null}
                     </Grid>
                     <Grid item xs={0.2} md={0.2} style={{borderRight: "1px solid rgba(34,36,38,.15)"}}></Grid>
                     <Grid item xs={5.2} md={5.2} style={{paddingTop: '0px'}}>
@@ -147,7 +171,7 @@ export default function IssueComponent(props) {
                             ) : null
                         }
                         <div style={isTimelineLoading ? {visibility: 'hidden'} : {}}>
-                            <CustomizedTimeline issueID={id} issueName={issueData===[]?null:issueData[2]} setTimelineLoading={setTimelineLoading}/>
+                            <CustomizedTimeline issueID={id} issueName={issueData===[]?null:issueData[2]} setTimelineLoading={setTimelineLoading} refresh={refreshTimeline} setRefresh={setRefreshTimeline}/>
                         </div>
                     </Grid>
                 </Grid>
@@ -176,7 +200,7 @@ export default function IssueComponent(props) {
             </Fab> */}
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>Add a new event for {issueData[2]}</DialogTitle>
-                <IssueForm issueID={id} issueName={issueData[2]} handleClose={handleClose}/>
+                <IssueForm issueID={id} issueName={issueData[2]} handleClose={handleClose} setRefresh={setRefreshTimeline}/>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                 </DialogActions>
