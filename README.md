@@ -7,20 +7,15 @@ Justice - a platform to champion the social issues close to your heart and build
 
 “Justice” builds a community of awareness for social issues, allowing users to champion the causes they believe in and build communities with peers passionate for the same causes.
 
-About the Project:
+About the Project:      
 
 ## Inspiration
-The following three reasons inspired the creation of Justice:
+Looking at social justice advocacy from a macro perspective, there are 2 main issues that we observed:
 
-There are many social movements (e.g. BLM) which are happening, but the efforts are spread across many social media platforms. We want to make it centralized. Discussing social issues requires maturity - which is why we feel a new platform, without the distractions of today’s social media, is necessary.
+1. Social movements are spread across social media platforms → it creates an environment where information/online discourse become convoluted
+2. Vision without a mission → Social change necessitates action aimed at a specific goal, it is difficult to keep track of progress of efforts/actionables aimed at tackling these issues
 
-1. There has been much effort for various social issues. However, information about those efforts are sparsely spread across the many social media platforms that the world currently has. We want to concentrate the discussion of and efforts for social issues into one platform, free from the distractions and judgements.
-
-
-
-Many people may find it difficult to visualize the “progress” of a social issue. Hence, it will be beneficial to have a timeline, consisting of broad directions (big arrows) and little steps (small arrows), so that anyone can see what has been done. It acts as a record of community efforts (e.g. drafting of policies, conferences, protests, rallies) for the social issue.
-
-Finally, we believe that every single individual has a set of causes that they wish to champion. We feel that they should be proud of their strong beliefs in these causes and be able to find similar individuals with the same beliefs. Justice is a new platform with the ability for people to freely display what causes they wish to champion, allowing for better networking and the ability to combine efforts to stir movements.
+Our creation aims to provide a centralized platform that provides information on social justice issues, rally communities together to tackle these issues while tracking actionables of our united efforts towards progress.
 
 
 ## What it does
