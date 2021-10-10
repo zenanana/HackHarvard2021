@@ -1,4 +1,4 @@
-import { CircularProgress, DialogContent, DialogContentText, Grid, SpeedDial, SpeedDialAction, SpeedDialIcon, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Alert, CircularProgress, DialogContent, DialogContentText, Grid, Snackbar, SpeedDial, SpeedDialAction, SpeedDialIcon, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import CustomizedTimeline from "./CustomizedTimeline.js"
@@ -133,6 +133,17 @@ export default function IssueComponent(props) {
         }
     ]
 
+    //START SNACKBAR HANDLING
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackbarOpen(false);
+    };
+    //END SNACKBAR HANDLING
+
     return (
         <div style={{marginTop: '5vh'}} >
             <Grid>
@@ -195,7 +206,7 @@ export default function IssueComponent(props) {
 
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>Add a new event for {issueData[2]}</DialogTitle>
-                <IssueForm issueID={id} issueName={issueData[2]} handleClose={handleClose} setRefresh={setRefreshTimeline}/>
+                <IssueForm issueID={id} issueName={issueData[2]} handleClose={handleClose} setRefresh={setRefreshTimeline} setSnackbarOpen={setSnackbarOpen}/>
                 <DialogActions>
                     <Button onClick={handleClose} color="error">Cancel</Button>
                 </DialogActions>
@@ -225,6 +236,12 @@ export default function IssueComponent(props) {
                 </Button>
                 </DialogActions>
             </Dialog>
+
+            <Snackbar open={snackbarOpen} autoHideDuration={4000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Event added successfully!
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

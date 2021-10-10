@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Avatar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, TextField } from "@mui/material";
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import React from "react";
 import { Link } from "react-router-dom";
@@ -39,6 +39,7 @@ export default function CommentsComponent(props) {
               body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then((result) => {
                 fetchAllCommentData()
+                setSnackbarOpen(true)
                 return result
             })
 
@@ -63,6 +64,17 @@ export default function CommentsComponent(props) {
     }
 
     const [commentConfirmationOpen, setCommentConfirmationOpen] = React.useState(false);
+
+    //START SNACKBAR HANDLING
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackbarOpen(false);
+    };
+    //END SNACKBAR HANDLING
 
     return (
         <><h1 style={{ textAlign: 'center' }}>Join the Conversation 🗣️</h1><div style={{ display: "flex", flexDirection: 'column', height: '50vh', overflowY: 'auto' }}>
@@ -126,6 +138,12 @@ export default function CommentsComponent(props) {
                 </Button>
                 </DialogActions>
             </Dialog>
+
+            <Snackbar open={snackbarOpen} autoHideDuration={4000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Comment added successfully!
+                </Alert>
+            </Snackbar>
         </>
     )
 }

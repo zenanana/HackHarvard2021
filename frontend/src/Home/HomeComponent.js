@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Card, CardMedia, CardActionArea, CardContent, Typography } from "@mui/material";
+import { Grid, Card, CardMedia, CardActionArea, CardContent, Typography, Snackbar, Alert } from "@mui/material";
 
 import { Link } from "react-router-dom";
 
@@ -43,6 +43,17 @@ export default function HomeComponent() {
     const handleClose = () => {
       setOpen(false);
     };
+
+	//START SNACKBAR HANDLING
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackbarOpen(false);
+    };
+    //END SNACKBAR HANDLING
 	
 	return (
 		<div>
@@ -93,7 +104,7 @@ export default function HomeComponent() {
                 </Fab>
 				<Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
 				<DialogTitle>Champion a new issue 🥇</DialogTitle>
-				<HomeForm handleClose={handleClose} fetchIssuesData={fetchIssuesData}/>
+				<HomeForm handleClose={handleClose} fetchIssuesData={fetchIssuesData} setSnackbarOpen={setSnackbarOpen}/>
 				
 				<DialogActions>
 				<Button onClick={handleClose} color="error">Cancel</Button>
@@ -101,7 +112,11 @@ export default function HomeComponent() {
 				</Dialog>
 			</Grid>
 
-
+			<Snackbar open={snackbarOpen} autoHideDuration={4000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Issue added successfully!
+                </Alert>
+            </Snackbar>
     	</div>
   	);
 }

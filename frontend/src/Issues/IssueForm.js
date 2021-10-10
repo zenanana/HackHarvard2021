@@ -14,7 +14,7 @@ const defaultValues = {
 
 
 const IssueForm = (props) => {
-    const {issueName, issueID, handleClose, setRefresh} = props;
+    const {issueName, issueID, handleClose, setRefresh, setSnackbarOpen} = props;
 
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
@@ -80,6 +80,7 @@ const IssueForm = (props) => {
               body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then((result) => {
                 setRefresh(true);
+                setSnackbarOpen(true);
                 return result
             });
             return response.json(); // parses JSON response into native JavaScript objects

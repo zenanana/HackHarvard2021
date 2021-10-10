@@ -21,7 +21,7 @@ const socialIssueList = [
 ];
 
 const HomeForm = (props) => {
-    const {handleClose, fetchIssuesData} = props
+    const {handleClose, fetchIssuesData, setSnackbarOpen} = props
 
     const [formValues, setFormValues] = useState(defaultValues);
     const [image, setImageData] = useState([]);
@@ -81,6 +81,7 @@ const HomeForm = (props) => {
               body: JSON.stringify(data) // body data type must match "Content-Type" header
             }).then((result) => {
                 fetchIssuesData()
+                setSnackbarOpen(true)
                 return result
             });
             return response.json(); // parses JSON response into native JavaScript objects
