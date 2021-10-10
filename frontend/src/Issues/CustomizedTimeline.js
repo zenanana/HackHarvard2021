@@ -86,14 +86,13 @@ export default function CustomizedTimeline(props) {
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: '12px', px: 2 }}>
+        <TimelineContent sx={{ py: '30px', px: 2 }}>
           <Typography variant="h6" component="span">
             {x[4]}
           </Typography>
           <Typography>{x[5]}</Typography>
         </TimelineContent>
       </TimelineItem>
-
 
       )}
   

@@ -92,7 +92,7 @@ export default function CommentsComponent(props) {
                         <AccordionSummary
                             aria-controls="panel1a-content"
                             id="panel1a-header"
-                            style={{ backgroundColor: "#E8EEFF" }}
+                            style={{ backgroundColor: "#E8EEFF", height:5 }}
                         >
                             <Link to={`/user/${x['authorID']}`} style={{ display: 'flex', textDecoration: 'none', color: 'black', alignItems: 'center' }}>
                                 <Avatar alt={allUserData[x['authorID'] - 1][1]} src={allUserData[x['authorID'] - 1][5]}></Avatar>
