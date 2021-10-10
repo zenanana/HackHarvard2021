@@ -45,9 +45,9 @@ Completing a full-stack application within 32 hours
 Probably not doing a full-stack application for the next hackathon 😂
 
 ## What's next for Justice
-The community concept, smaller community within the larger social issues (like maybe separated by geographical locations, schools) - measure progress in a smaller community.
-Location, find events by locations
-Leaders for each social issue.
+1. Smaller communities can be created within the larger social issues, for example by geographical locations. This makes it easier to track progress in a smaller community, which can be counted as progress towards the main social issue.
+2. Adding a feature to find events by location (adding Google Maps API to our tech stack)
+3. Designate leaders (the go-to people) for each social issue with the ability to edit descriptions and moderate chats. 
 
 
 Built with: ReactJS, Flask, SQLite
@@ -55,7 +55,13 @@ Built with: ReactJS, Flask, SQLite
 GitHub repo link: https://github.com/zenanana/HackHarvard2021
 
 Image Gallery:
-Take 3 pictures of each component.
+<img width="1749" alt="1" src="https://user-images.githubusercontent.com/59784343/136701713-772df8a3-12ff-469e-a00b-76833eccdfa1.png">
+
+<img width="1786" alt="2" src="https://user-images.githubusercontent.com/59784343/136701718-424376d6-2e01-45be-8fc2-eb0491643c6a.png">
+
+<img width="1786" alt="3" src="https://user-images.githubusercontent.com/59784343/136701783-c20fb99b-1263-4503-aa25-c81d31873656.png">
+
+<img width="1731" alt="4" src="https://user-images.githubusercontent.com/59784343/136701784-a2ab927f-9245-40aa-8b63-86f6e908c8af.png">
 
 
 
